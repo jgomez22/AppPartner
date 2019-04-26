@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "709055624502",
+    "firebase_url": "https://chapatupartner.firebaseio.com",
+    "project_id": "chapatupartner",
+    "storage_bucket": "chapatupartner.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:709055624502:android:700551615432ab0a",
+        "android_client_info": {
+          "package_name": "com.mobile.apppartner"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "709055624502-t1odu609e200h6qg5v2b7crqtsv5it0s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDEsHfniYGIZOFP0TdUKB-ePsNYhvhsa3Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "709055624502-t1odu609e200h6qg5v2b7crqtsv5it0s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
