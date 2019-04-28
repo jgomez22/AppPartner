@@ -10,12 +10,6 @@ import io.reactivex.Observable
 class RegisterViewModel:ViewModel() {
 
     lateinit var apiClient:ApiClient
-    fun backToLogin(context:Context){
-        context.applicationContext
-        if (context is Activity) {
-            context.onBackPressed()
-        }
-    }
 
     fun createAccount(email:String,password:String,activity: Activity):Observable<UserPartner>{
         this.apiClient = ApiClient(activity)

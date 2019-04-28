@@ -20,6 +20,9 @@ class RegisterActivity : AppCompatActivity() {
 
         viewModel = ViewModelProviders.of(this).get(RegisterViewModel::class.java)
 
+        txtNombreRe.setText(intent.getStringExtra("fullname"))
+        txtCorreoRe.setText(intent.getStringExtra("correo"))
+
         this.btnRegistrar.setOnClickListener {
             val email = txtCorreoRe.text.toString()
             val password = txtPasswordRe.text.toString()
