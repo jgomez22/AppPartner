@@ -20,13 +20,9 @@ class RegisterActivity : AppCompatActivity() {
 
         viewModel = ViewModelProviders.of(this).get(RegisterViewModel::class.java)
 
-        this.btnGoToLogin.setOnClickListener {
-            viewModel.backToLogin(this)
-        }
-
         this.btnRegistrar.setOnClickListener {
-            val email = txtEmail.text.toString()
-            val password = txtPassword.text.toString()
+            val email = txtCorreoRe.text.toString()
+            val password = txtPasswordRe.text.toString()
             viewModel.createAccount(email,password,this)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({

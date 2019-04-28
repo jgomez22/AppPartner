@@ -24,8 +24,8 @@ class LoginActivity : AppCompatActivity() {
         }
 
         this.btnLogin.setOnClickListener {
-            val email = this.txtEmail.text.toString()
-            val password = this.txtPassword.text.toString()
+            val email = this.txtCorreoLo.text.toString()
+            val password = this.txtPasswordLo.text.toString()
             viewModel.logInViewModel(email,password,this)
                 .subscribe(
                     {it->
