@@ -26,6 +26,7 @@ class RegisterActivity : AppCompatActivity() {
 
         viewModel = ViewModelProviders.of(this).get(RegisterViewModel::class.java)
 
+        imgPerfilRe.setBackgroundDrawable(viewModel.bitmapDrawable)
         txtNombreRe.setText(intent.getStringExtra("fullname"))
         txtCorreoRe.setText(intent.getStringExtra("correo"))
 
@@ -42,19 +43,15 @@ class RegisterActivity : AppCompatActivity() {
         }
 
         this.imgPerfilRe.setOnClickListener {
-            val intent = Intent(Intent.ACTION_PICK)
-            intent.type = "image/"
-            startActivityForResult(intent,0)
+            viewModel.openImage(this)
+
         }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if(requestCode==0 && resultCode== Activity.RESULT_OK && data !=null){
-            uri = data.data
-            val bitmap = MediaStore.Images.Media.getBitmap(contentResolver,uri)
-            val bitmapDrawable = BitmapDrawable(bitmap)
-            imgPerfilRe.setBackgroundDrawable(bitmapDrawable)
+            viewModel.onActivityResult(requestCode,resultCode,data,this)
         }
     }
 }
