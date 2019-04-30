@@ -29,7 +29,7 @@ class LoginActivity : AppCompatActivity() {
         viewModel = ViewModelProviders.of(this).get(LoginViewModel::class.java)
 
         this.btnActivarCuenta.setOnClickListener {
-            onConnectButtonClick()
+            viewModel.onConnectButtonClick(this)
         }
 
         this.btnLogin.setOnClickListener {
@@ -45,7 +45,7 @@ class LoginActivity : AppCompatActivity() {
                     })
         }
     }
-
+    /*
     fun onConnectButtonClick(){
         showConnectingInProgressUI()
         //check that client id and redirect have been set correctly
@@ -96,13 +96,16 @@ class LoginActivity : AppCompatActivity() {
     private fun showConnectErrorUI() {
         pbCargar.setVisibility(View.GONE)
     }
+    */
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         //Log.i(TAG, "onActivityResult - AuthenticationActivity has come back with results")
         super.onActivityResult(requestCode, resultCode, data)
-        AuthenticationManager
+        viewModel.onActivityResult(requestCode,resultCode,data)
+        /*AuthenticationManager
             .getInstance()
             .getAuthenticationContext()
             .onActivityResult(requestCode, resultCode, data)
+            */
     }
 }
