@@ -6,14 +6,21 @@ import android.content.Intent
 import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.provider.MediaStore
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.storage.FirebaseStorage
 import com.mobile.apppartner.Models.ApiClient
 import com.mobile.apppartner.Models.UserPartner
+import com.mobile.apppartner.Views.LoginActivity
 import io.reactivex.Observable
 import kotlinx.android.synthetic.main.activity_register.*
+import java.util.*
 
 class RegisterViewModel:ViewModel() {
 
     lateinit var apiClient:ApiClient
+
+    lateinit var uri:Uri
 
     var bitmapDrawable:BitmapDrawable?=null
         private set
@@ -29,12 +36,36 @@ class RegisterViewModel:ViewModel() {
         activity.startActivityForResult(intent,0)
     }
 
+    fun finishRegister(correo:String,nombre:String){
+        val filename = UUID.randomUUID()
+        val ref = FirebaseStorage.getInstance().getReference("/images/$filename")
+        ref.putFile(uri).addOnSuccessListener {
+            ref.downloadUrl.addOnSuccessListener {
+                saveUserToDatabase(it.toString(),correo,nombre)
+            }
+        }
+    }
+
+    fun saveUserToDatabase(uri:String,correo:String,nombre:String){
+        val uid = FirebaseAuth.getInstance().uid?:""
+        val ref1 =FirebaseDatabase.getInstance().getReference("/users/$uid")
+        val user = User(uid,correo,nombre,uri)
+        ref1.setValue(user).addOnSuccessListener {
+            FirebaseAuth.getInstance().signOut()
+
+        }.addOnFailureListener {
+            print(it.message.toString())
+        }
+    }
+
     fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?,activity: Activity){
         if(requestCode==0 && resultCode== Activity.RESULT_OK && data !=null){
-            val uri = data.data
+            uri = data.data
             val bitmap = MediaStore.Images.Media.getBitmap(activity.contentResolver,uri)
             bitmapDrawable = BitmapDrawable(bitmap)
             activity.imgPerfilRe.setBackgroundDrawable(bitmapDrawable)
         }
     }
 }
+
+public class User(val uid:String,val email:String,val fullname:String,val url_img:String)

@@ -36,7 +36,9 @@ class RegisterActivity : AppCompatActivity() {
             viewModel.createAccount(email,password,this)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                Toast.makeText(this, "Felicitaciones ${it.email}, ya te encuentras registrado", Toast.LENGTH_LONG).show()
+                        viewModel.finishRegister(txtCorreoRe.text.toString(),txtNombreRe.text.toString())
+                    Toast.makeText(this, "Felicitaciones ${it.email}, ya te encuentras registrado", Toast.LENGTH_LONG).show()
+                    finish()
             },{error ->
                 Toast.makeText(this,error.message, Toast.LENGTH_LONG).show()
             })
