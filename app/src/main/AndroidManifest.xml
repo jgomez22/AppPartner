@@ -22,6 +22,8 @@
         </activity>
         <activity android:name=".Views.RegisterActivity">
         </activity>
+        <activity android:name=".Views.MainActivity">
+        </activity>
     </application>
 
 </manifest>

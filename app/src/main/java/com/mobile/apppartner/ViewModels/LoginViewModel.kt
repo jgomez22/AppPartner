@@ -13,6 +13,7 @@ import com.mobile.apppartner.ApiOffice365.Constants
 import com.mobile.apppartner.Views.RegisterActivity
 import com.mobile.apppartner.Models.ApiClient
 import com.mobile.apppartner.Models.UserPartner
+import com.mobile.apppartner.Views.MainActivity
 import io.reactivex.Observable
 import kotlinx.android.synthetic.main.activity_login.*
 import java.net.URI
@@ -29,6 +30,11 @@ class LoginViewModel:ViewModel() {
         intent.putExtra("fullname",fullname)
         intent.putExtra("correo",correo)
         activity.startActivity(intent)
+    }
+
+    fun goToMain(activity:Activity){
+        activity.startActivity(Intent(activity,MainActivity::class.java))
+        activity.finish()
     }
 
     fun logInViewModel(email:String,password:String,activity:Activity):Observable<UserPartner>{

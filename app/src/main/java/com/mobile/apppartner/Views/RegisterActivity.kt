@@ -3,11 +3,10 @@ package com.mobile.apppartner.Views
 import android.app.Activity
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
-import android.graphics.drawable.BitmapDrawable
+import android.content.pm.ActivityInfo
 import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.MediaStore
 import android.widget.Toast
 import com.mobile.apppartner.R
 import com.mobile.apppartner.ViewModels.RegisterViewModel
@@ -20,6 +19,7 @@ class RegisterActivity : AppCompatActivity() {
     var uri:Uri?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
         supportActionBar?.hide()
@@ -44,7 +44,6 @@ class RegisterActivity : AppCompatActivity() {
 
         this.imgPerfilRe.setOnClickListener {
             viewModel.openImage(this)
-
         }
     }
 
