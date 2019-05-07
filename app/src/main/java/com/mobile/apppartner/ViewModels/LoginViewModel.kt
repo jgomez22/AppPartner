@@ -13,6 +13,7 @@ import com.mobile.apppartner.ApiOffice365.Constants
 import com.mobile.apppartner.Views.RegisterActivity
 import com.mobile.apppartner.Models.ApiClient
 import com.mobile.apppartner.Models.UserPartner
+import com.mobile.apppartner.Models.UserVal
 import com.mobile.apppartner.Views.MainActivity
 import io.reactivex.Observable
 import kotlinx.android.synthetic.main.activity_login.*
@@ -44,7 +45,7 @@ class LoginViewModel:ViewModel() {
 
     fun onConnectButtonClick(act:Activity){
         this.activity = act
-        showConnectingInProgressUI()
+        //showConnectingInProgressUI()
         //check that client id and redirect have been set correctly
         try {
             UUID.fromString(Constants.CLIENT_ID)
@@ -53,7 +54,7 @@ class LoginViewModel:ViewModel() {
             Toast.makeText(
                 activity.applicationContext, "Ocurrio un error", Toast.LENGTH_LONG
             ).show()
-            resetUIForConnect()
+            //resetUIForConnect()
             return
         }
 
@@ -72,28 +73,24 @@ class LoginViewModel:ViewModel() {
                         result.userInfo.givenName.toString()+" "+result.userInfo.familyName.toString(),
                         activity)
 
-                    resetUIForConnect()
+                    //resetUIForConnect()
                 }
 
                 override fun onError(e: Exception) {
 
-                    showConnectErrorUI()
+                    //showConnectErrorUI()
                 }
             })
     }
 
-    private fun resetUIForConnect() {
-        activity.pbCargar.setVisibility(View.GONE)
+    fun signInOffice365(activity:Activity):Observable<UserVal>{
+        this.apiClient = ApiClient(activity)
+        return apiClient.signInOffice365()
     }
 
-    private fun showConnectingInProgressUI() {
-        activity.pbCargar.setVisibility(View.VISIBLE)
-    }
+    /*
 
-    private fun showConnectErrorUI() {
-        activity.pbCargar.setVisibility(View.GONE)
-    }
-
+    */
     fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         AuthenticationManager
             .getInstance()

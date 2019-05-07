@@ -27,8 +27,11 @@ class RegisterActivity : AppCompatActivity() {
         viewModel = ViewModelProviders.of(this).get(RegisterViewModel::class.java)
 
         imgPerfilRe.setBackgroundDrawable(viewModel.bitmapDrawable)
-        txtNombreRe.setText(intent.getStringExtra("fullname"))
-        txtCorreoRe.setText(intent.getStringExtra("correo"))
+
+        val fullname = intent.getStringExtra("fullname").toString()
+        val correo = intent.getStringExtra("correo").toString()
+        txtNombreRe.setText(fullname)
+        txtCorreoRe.setText(correo)
 
         this.btnRegistrar.setOnClickListener {
             val email = txtCorreoRe.text.toString()

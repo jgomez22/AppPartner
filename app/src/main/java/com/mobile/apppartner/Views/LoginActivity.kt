@@ -6,6 +6,7 @@ import android.content.pm.ActivityInfo
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import com.mobile.apppartner.ApiOffice365.AuthenticationManager
 import com.mobile.apppartner.R
 import com.mobile.apppartner.ViewModels.LoginViewModel
 import kotlinx.android.synthetic.main.activity_login.*
@@ -24,7 +25,11 @@ class LoginActivity : AppCompatActivity() {
         viewModel = ViewModelProviders.of(this).get(LoginViewModel::class.java)
 
         this.btnActivarCuenta.setOnClickListener {
-            viewModel.onConnectButtonClick(this)
+            viewModel.signInOffice365(this).subscribe({
+                viewModel.goToRegister(it.email.toString(),it.fullname.toString(),this)
+            },{
+                Toast.makeText(this,it.message,Toast.LENGTH_LONG).show()
+            })
         }
 
         this.btnLogin.setOnClickListener {
