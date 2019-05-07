@@ -16,7 +16,7 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
         supportActionBar?.hide()
-        //cambio
+        //NUEVO CAMBIO JOSUE
         viewModel = ViewModelProviders.of(this).get(SplashViewModel::class.java)
         viewModel.goTo(this)
     }
