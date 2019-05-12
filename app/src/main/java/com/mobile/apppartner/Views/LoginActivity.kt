@@ -5,10 +5,12 @@ import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import com.mobile.apppartner.ApiOffice365.AuthenticationManager
 import com.mobile.apppartner.R
 import com.mobile.apppartner.ViewModels.LoginViewModel
+import io.reactivex.rxkotlin.subscribeBy
 import kotlinx.android.synthetic.main.activity_login.*
 
 
@@ -38,6 +40,7 @@ class LoginActivity : AppCompatActivity() {
             viewModel.logInViewModel(email,password,this)
                 .subscribe(
                     {it->
+                        Toast.makeText(this,"Bienvenido ${it.email}",Toast.LENGTH_LONG).show()
                         viewModel.goToMain(this)
                     }
                     ,{error->
