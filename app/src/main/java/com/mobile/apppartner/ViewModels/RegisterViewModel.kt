@@ -10,6 +10,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import com.mobile.apppartner.Models.ApiClient
+import com.mobile.apppartner.Models.UserDatabase
 import com.mobile.apppartner.Models.UserPartner
 import com.mobile.apppartner.Views.LoginActivity
 import io.reactivex.Observable
@@ -49,7 +50,9 @@ class RegisterViewModel:ViewModel() {
     fun saveUserToDatabase(uri:String,correo:String,nombre:String){
         val uid = FirebaseAuth.getInstance().uid?:""
         val ref1 =FirebaseDatabase.getInstance().getReference("/users/$uid")
-        val user = User(uid,correo,nombre,uri)
+        //cambiarlo despues :)
+        val interes = mutableListOf<Int>(2,4,7)
+        val user = UserDatabase(uid,correo,nombre,uri,interes)
         ref1.setValue(user).addOnSuccessListener {
             FirebaseAuth.getInstance().signOut()
 
@@ -67,5 +70,3 @@ class RegisterViewModel:ViewModel() {
         }
     }
 }
-
-public class User(val uid:String,val email:String,val fullname:String,val url_img:String)
