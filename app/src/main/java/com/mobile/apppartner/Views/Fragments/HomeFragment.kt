@@ -2,6 +2,8 @@ package com.example.appprueba
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +12,8 @@ import com.mobile.apppartner.Models.Interes
 import kotlinx.android.synthetic.main.fragment_home.view.*
 import com.mobile.apppartner.R
 import com.mobile.apppartner.ViewModels.HomeViewModel
+import com.mobile.apppartner.Views.Adapter.InteresAdapter
+import kotlinx.android.synthetic.main.fragment_home.*
 
 class HomeFragment: Fragment() {
 
@@ -33,11 +37,23 @@ class HomeFragment: Fragment() {
                     for (u in p0.children){
                         asd.add(Interes(u.key.toString(),u.value.toString()))
                     }
+                    getInteres(asd)
                 }
             }
             override fun onCancelled(p0: DatabaseError) {
                 print(p0.message)
                 }
         })
+
+
+
+    }
+
+    fun getInteres(list:MutableList<Interes>){
+        this.rvInteresesHO.setHasFixedSize(true)
+        val layout = LinearLayoutManager(this.context)
+        layout.orientation = LinearLayoutManager.HORIZONTAL
+        this.rvInteresesHO.setAdapter(InteresAdapter(list))
+        this.rvInteresesHO.setLayoutManager(layout)
     }
 }
