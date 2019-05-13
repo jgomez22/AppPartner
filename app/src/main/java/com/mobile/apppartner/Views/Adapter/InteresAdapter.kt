@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.mobile.apppartner.Models.Interes
+import com.squareup.picasso.Picasso
 
 public class InteresAdapter:RecyclerView.Adapter<viewHolder> {
 
@@ -24,6 +25,16 @@ public class InteresAdapter:RecyclerView.Adapter<viewHolder> {
 
     override fun onBindViewHolder(viewHolder: viewHolder, p1: Int) {
         viewHolder.nombre.setText(list.get(p1).name.toString())
+        when(list.get(p1).id){
+
+            "1"-> viewHolder.imagen.setImageResource(R.drawable.ic_study)
+            "2"-> viewHolder.imagen.setImageResource(R.drawable.ic_concert)
+            "3"-> viewHolder.imagen.setImageResource(R.drawable.ic_cinema)
+            "4"-> viewHolder.imagen.setImageResource(R.drawable.ic_love)
+            "5"-> viewHolder.imagen.setImageResource(R.drawable.ic_sport)
+            "6"-> viewHolder.imagen.setImageResource(R.drawable.ic_travel)
+            "7"-> viewHolder.imagen.setImageResource(R.drawable.ic_other)
+        }
     }
 
 
