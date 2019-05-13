@@ -26,15 +26,12 @@ class ProfileFragment: Fragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(ProfileViewModel::class.java)
 
-        if(viewModel.u == null) {
-            viewModel.getUser(this).subscribe({
-                setValues()
-            },{
-                print(it.toString())
-            })
-        } else {
-            print("hola")
-        }
+
+        viewModel.getUser(this).subscribe({
+            setValues()
+        },{
+            print(it.toString())
+        })
 
         this.btnSalir.setOnClickListener {
             viewModel.signOut(activity!!)
