@@ -15,6 +15,12 @@ class ChatFragment: Fragment() {
         return inflater.inflate(R.layout.fragment_chat,container,false)
     }
 
+    companion object {
+
+        @JvmStatic
+        fun newInstance() = ChatFragment()
+    }
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
     }

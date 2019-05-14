@@ -22,6 +22,12 @@ class ProfileFragment: Fragment() {
         return inflater.inflate(R.layout.fragment_profile,container,false)
     }
 
+    companion object {
+
+        @JvmStatic
+        fun newInstance() = ProfileFragment()
+    }
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(ProfileViewModel::class.java)
