@@ -37,22 +37,24 @@ class RegisterViewModel:ViewModel() {
         activity.startActivityForResult(intent,0)
     }
 
-    fun finishRegister(correo:String,nombre:String){
+    fun finishRegister(correo:String,nombre:String,campus:String,career:String){
         val filename = UUID.randomUUID()
         val ref = FirebaseStorage.getInstance().getReference("/images/$filename")
         ref.putFile(uri).addOnSuccessListener {
             ref.downloadUrl.addOnSuccessListener {
-                saveUserToDatabase(it.toString(),correo,nombre)
+                saveUserToDatabase(it.toString(),correo,nombre,campus,career)
             }
         }
     }
 
-    fun saveUserToDatabase(uri:String,correo:String,nombre:String){
+    fun saveUserToDatabase(uri:String,correo:String,nombre:String,campus:String,career:String){
         val uid = FirebaseAuth.getInstance().uid?:""
         val ref1 =FirebaseDatabase.getInstance().getReference("/users/$uid")
         //cambiarlo despues :)
         val interes = mutableListOf<Int>(2,4,7)
         val user = UserDatabase(uid,correo,nombre,uri,interes)
+        user.campus=campus
+        user.career=career
         ref1.setValue(user).addOnSuccessListener {
             FirebaseAuth.getInstance().signOut()
 

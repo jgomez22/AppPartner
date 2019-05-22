@@ -4,4 +4,23 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string-array name="sede_array">
+        <item>Torre Tecnológica Arequipa</item>
+        <item>San Juan Lurigancho</item>
+        <item>Lima Norte</item>
+        <item>Ate-Vitarte</item>
+        <item>Lima Sur</item>
+        <item>Sede Arequipa</item>
+        <item>Sede Chiclayo</item>
+    </string-array>
+
+    <string-array name="career_array">
+        <item>Ingenieria</item>
+        <item>Ciencias de la Comunicacion</item>
+        <item>Arquitectura</item>
+        <item>Derecho</item>
+        <item>Adm. Empresas</item>
+        <item>Otro</item>
+    </string-array>
 </resources>
