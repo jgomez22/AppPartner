@@ -21,7 +21,7 @@ class RegisterViewModel:ViewModel() {
 
     lateinit var apiClient:ApiClient
 
-    lateinit var uri:Uri
+    var uri:Uri? = null
 
     var bitmapDrawable:BitmapDrawable?=null
         private set
@@ -40,7 +40,7 @@ class RegisterViewModel:ViewModel() {
     fun finishRegister(correo:String,nombre:String,campus:String,career:String){
         val filename = UUID.randomUUID()
         val ref = FirebaseStorage.getInstance().getReference("/images/$filename")
-        ref.putFile(uri).addOnSuccessListener {
+        ref.putFile(uri!!).addOnSuccessListener {
             ref.downloadUrl.addOnSuccessListener {
                 saveUserToDatabase(it.toString(),correo,nombre,campus,career)
             }
@@ -66,9 +66,10 @@ class RegisterViewModel:ViewModel() {
     fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?,activity: Activity){
         if(requestCode==0 && resultCode== Activity.RESULT_OK && data !=null){
             uri = data.data
-            val bitmap = MediaStore.Images.Media.getBitmap(activity.contentResolver,uri)
-            bitmapDrawable = BitmapDrawable(bitmap)
-            activity.imgPerfilRe.setBackgroundDrawable(bitmapDrawable)
+            //val bitmap = MediaStore.Images.Media.getBitmap(activity.contentResolver,uri)
+            //bitmapDrawable = BitmapDrawable(bitmap)
+            //activity.imgPerfilRe.setBackgroundDrawable(bitmapDrawable)
+            activity.imgPerfilRe.setImageURI(uri)
         }
     }
 }

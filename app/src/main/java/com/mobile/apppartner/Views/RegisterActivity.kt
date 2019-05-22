@@ -33,13 +33,24 @@ class RegisterActivity : AppCompatActivity() {
 
         viewModel = ViewModelProviders.of(this).get(RegisterViewModel::class.java)
 
-        imgPerfilRe.setBackgroundDrawable(viewModel.bitmapDrawable)
-
         val fullname = intent.getStringExtra("fullname").toString()
         val correo = intent.getStringExtra("correo").toString()
         txtNombreRe.setText(fullname)
         txtCorreoRe.setText(correo)
         this.btnRegistrar.setOnClickListener {
+
+            if(txtPasswordRe.text.toString()=="" || txtPasswordRe.text.toString()==null) {
+                Toast.makeText(this,"Contraseña vacio",Toast.LENGTH_LONG).show()
+                return@setOnClickListener
+            }
+            if(txtPasswordRe.text.toString().length<7){
+                Toast.makeText(this,"Contraseña debe tener mayor a 7 caracteres",Toast.LENGTH_LONG).show()
+                return@setOnClickListener
+            }
+            if(viewModel.uri==null){
+                Toast.makeText(this,"Sube una imagen de perfil",Toast.LENGTH_LONG).show()
+                return@setOnClickListener
+            }
             val email = txtCorreoRe.text.toString()
             val password = txtPasswordRe.text.toString()
             viewModel.createAccount(email,password,this)
