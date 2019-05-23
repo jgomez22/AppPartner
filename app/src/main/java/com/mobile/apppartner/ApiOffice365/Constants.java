@@ -5,7 +5,7 @@ public interface Constants {
     String DISCOVERY_RESOURCE_URL = "https://api.office.com/discovery/v1.0/me/";
     String DISCOVERY_RESOURCE_ID = "https://api.office.com/discovery/";
     String MAIL_CAPABILITY = "Mail";
-    // Update these two constants with the values for your application:
-    String CLIENT_ID = "cdfe4b14-7a7f-45fe-8363-0e793de4454d";
+    // Update from Keyla Account in Azure Portal
+    String CLIENT_ID = "bbdb9636-055a-43f4-88d4-4e099e069bc9";
     String REDIRECT_URI = "https://www.google.com";
 }
