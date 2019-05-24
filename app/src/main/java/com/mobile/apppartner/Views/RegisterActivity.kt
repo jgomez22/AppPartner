@@ -27,7 +27,6 @@ class RegisterActivity : AppCompatActivity() {
     var uri:Uri?=null
     lateinit var campus:String
     lateinit var career:String
-    var value:String?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
@@ -73,10 +72,12 @@ class RegisterActivity : AppCompatActivity() {
         }
 
         this.btnAddInterest.setOnClickListener {
-            this.startActivityForResult(Intent(this,PopInterestActivity::class.java),200)
+            val i = Intent(this,PopInterestActivity::class.java)
+
+            this.startActivityForResult(i,200)
         }
 
-        spCampus.setOnItemSelectedListener(object : OnItemSelectedListener {
+        spCampus.onItemSelectedListener = object : OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
 
             }
@@ -85,9 +86,9 @@ class RegisterActivity : AppCompatActivity() {
                 campus = parent?.getItemAtPosition(position).toString()
             }
 
-        })
+        }
 
-        spCareer.setOnItemSelectedListener(object : OnItemSelectedListener {
+        spCareer.onItemSelectedListener = object : OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
 
             }
@@ -96,7 +97,7 @@ class RegisterActivity : AppCompatActivity() {
                 career = parent?.getItemAtPosition(position).toString()
             }
 
-        })
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -105,8 +106,7 @@ class RegisterActivity : AppCompatActivity() {
             viewModel.onActivityResult(requestCode,resultCode,data,this)
         }
         if(requestCode==200){
-            value = data?.getStringExtra("value")
-            print(value)
+
         }
     }
 }
