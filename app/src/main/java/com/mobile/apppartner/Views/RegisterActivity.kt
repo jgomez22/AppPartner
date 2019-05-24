@@ -68,6 +68,10 @@ class RegisterActivity : AppCompatActivity() {
             viewModel.openImage(this)
         }
 
+        this.btnAddInterest.setOnClickListener {
+            this.startActivity(Intent(this,PopInterestActivity::class.java))
+        }
+
         spCampus.setOnItemSelectedListener(object : OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
 

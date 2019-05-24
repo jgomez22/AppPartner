@@ -24,6 +24,9 @@
         </activity>
         <activity android:name=".Views.MainActivity">
         </activity>
+        <activity android:name=".Views.PopInterestActivity"
+        android:theme="@style/AppTheme.CustomTheme">
+        </activity>
     </application>
 
 </manifest>

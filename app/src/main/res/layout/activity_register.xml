@@ -88,6 +88,12 @@
                 android:entries="@array/career_array"
                 android:id="@+id/spCareer"
                 android:layout_marginLeft="20dp"/>
+        <Button
+                android:text="Agregar Interes"
+                android:layout_width="200dp"
+                android:layout_height="45dp" android:id="@+id/btnAddInterest"
+                android:background="@drawable/btn_corner_red" android:layout_marginLeft="20dp"
+                android:textColor="@color/colorWhite" android:textAllCaps="false" android:textSize="18sp"/>
     </LinearLayout>
     <Button
             android:text="Completar Registro"
