@@ -41,13 +41,13 @@ class PopInterestActivity : AppCompatActivity() {
 
     fun setCheckBox(){
 
-        val length = resources.getStringArray(R.array.interets_array).size
+        val array = resources.getStringArray(R.array.interets_array)
 
-        for (i in 0..length-1) {
+        for (i in 0..array.size-1) {
             val ch = CheckBox(this)
-            ch.text = resources.getStringArray(R.array.interets_array)[i].toString()
+            ch.text = array[i].toString()
             ch.textSize= 18F
-            ch.setTextColor(Color.WHITE);
+            ch.setTextColor(Color.BLACK);
             ch.setOnCheckedChangeListener(object :CompoundButton.OnCheckedChangeListener{
                 override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
 
