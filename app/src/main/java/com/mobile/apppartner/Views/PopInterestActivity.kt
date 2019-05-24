@@ -44,7 +44,7 @@ class PopInterestActivity : AppCompatActivity() {
 
     fun setCheckBox(){
 
-        val length = resources.getStringArray(R.array.sede_array).size
+        val length = resources.getStringArray(R.array.interets_array).size
 
         for (i in 0..length-1) {
             val ch = CheckBox(this)
