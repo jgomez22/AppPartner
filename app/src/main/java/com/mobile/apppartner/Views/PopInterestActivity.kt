@@ -5,6 +5,10 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.DisplayMetrics
 import com.mobile.apppartner.R
+import kotlinx.android.synthetic.main.activity_pop_interest.*
+import android.content.Intent
+
+
 
 class PopInterestActivity : AppCompatActivity() {
 
@@ -19,6 +23,13 @@ class PopInterestActivity : AppCompatActivity() {
         val height = dm.heightPixels
         val width = dm.widthPixels
         window.setLayout((width*.8).toInt(), (height*.6).toInt())
+
+        btnAddInt.setOnClickListener {
+
+            intent.putExtra("value", checkBox2.isChecked.toString())
+            setResult(200, intent)
+            finish()
+        }
 
     }
 }

@@ -15,6 +15,9 @@ import com.mobile.apppartner.ViewModels.RegisterViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.activity_register.*
 import android.widget.AdapterView.OnItemSelectedListener
+import android.R.attr.data
+
+
 
 
 
@@ -24,6 +27,7 @@ class RegisterActivity : AppCompatActivity() {
     var uri:Uri?=null
     lateinit var campus:String
     lateinit var career:String
+    var value:String?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
@@ -69,7 +73,7 @@ class RegisterActivity : AppCompatActivity() {
         }
 
         this.btnAddInterest.setOnClickListener {
-            this.startActivity(Intent(this,PopInterestActivity::class.java))
+            this.startActivityForResult(Intent(this,PopInterestActivity::class.java),200)
         }
 
         spCampus.setOnItemSelectedListener(object : OnItemSelectedListener {
@@ -99,6 +103,10 @@ class RegisterActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if(requestCode==0 && resultCode== Activity.RESULT_OK && data !=null){
             viewModel.onActivityResult(requestCode,resultCode,data,this)
+        }
+        if(requestCode==200){
+            value = data?.getStringExtra("value")
+            print(value)
         }
     }
 }
