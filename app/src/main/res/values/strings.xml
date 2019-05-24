@@ -23,4 +23,14 @@
         <item>Adm. Empresas</item>
         <item>Otro</item>
     </string-array>
+
+    <string-array name="interets_array">
+        <item>Estudios</item>
+        <item>Concierto</item>
+        <item>Cine</item>
+        <item>Salir</item>
+        <item>Deportes</item>
+        <item>Viajes</item>
+        <item>Otros</item>
+    </string-array>
 </resources>
