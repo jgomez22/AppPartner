@@ -8,7 +8,7 @@
         tools:context=".Views.PopInterestActivity" android:background="@drawable/btn_borner_red">
 
     <Button
-            android:text="Agregar"
+            android:text="Regresar"
             android:layout_width="100dp"
             android:layout_height="35dp" android:id="@+id/btnAddInt"
             android:textAllCaps="false"

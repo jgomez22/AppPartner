@@ -29,15 +29,11 @@ class PopInterestActivity : AppCompatActivity() {
         val height = dm.heightPixels
         val width = dm.widthPixels
         window.setLayout((width*.8).toInt(), (height*.5).toInt())
-
         setCheckBox()
 
         btnAddInt.setOnClickListener {
-            setResult(200, intent)
-            intent.putExtra("intereses",intereses!!.toBooleanArray())
-            finish()
+            close()
         }
-
     }
 
     fun setCheckBox(){
@@ -60,4 +56,13 @@ class PopInterestActivity : AppCompatActivity() {
         }
     }
 
+    override fun onBackPressed() {
+        close()
+    }
+
+    fun close(){
+        setResult(200, intent)
+        intent.putExtra("intereses",intereses!!.toBooleanArray())
+        finish()
+    }
 }
