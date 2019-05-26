@@ -42,32 +42,22 @@ class RegisterActivity : AppCompatActivity() {
         val correo = intent.getStringExtra("correo").toString()
         txtNombreRe.setText(fullname)
         txtCorreoRe.setText(correo)
-        this.btnRegistrar.setOnClickListener {
 
-            if(txtPasswordRe.text.toString()=="" || txtPasswordRe.text.toString()==null) {
-                Toast.makeText(this,"Contraseña vacio",Toast.LENGTH_LONG).show()
-                return@setOnClickListener
-            }
-            if(txtPasswordRe.text.toString().length<7){
-                Toast.makeText(this,"Contraseña debe tener mayor a 7 caracteres",Toast.LENGTH_LONG).show()
-                return@setOnClickListener
-            }
-            if(viewModel.uri==null){
-                Toast.makeText(this,"Sube una imagen de perfil",Toast.LENGTH_LONG).show()
-                return@setOnClickListener
-            }
+        this.btnRegistrar.setOnClickListener {
             val email = txtCorreoRe.text.toString()
             val password = txtPasswordRe.text.toString()
             getInterest()
-            viewModel.createAccount(email,password,this)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
+            if(viewModel.validateUser(password,this)){
+                viewModel.createAccount(email,password,this)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({
                         viewModel.finishRegister(txtCorreoRe.text.toString(),txtNombreRe.text.toString(),campus,career)
-                    Toast.makeText(this, "Felicitaciones ${it.email}, ya te encuentras registrado", Toast.LENGTH_LONG).show()
-                    finish()
-            },{error ->
-                Toast.makeText(this,error.message, Toast.LENGTH_LONG).show()
-            })
+                        Toast.makeText(this, "Felicitaciones ${it.email}, ya te encuentras registrado", Toast.LENGTH_LONG).show()
+                        finish()
+                    },{error ->
+                        Toast.makeText(this,error.message, Toast.LENGTH_LONG).show()
+                    })
+            }
         }
 
         this.imgPerfilRe.setOnClickListener {

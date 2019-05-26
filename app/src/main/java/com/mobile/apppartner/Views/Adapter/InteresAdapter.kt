@@ -27,13 +27,13 @@ public class InteresAdapter:RecyclerView.Adapter<viewHolder> {
         viewHolder.nombre.setText(list.get(p1).name.toString())
         when(list.get(p1).id){
 
-            "1"-> viewHolder.imagen.setImageResource(R.drawable.ic_study)
-            "2"-> viewHolder.imagen.setImageResource(R.drawable.ic_concert)
-            "3"-> viewHolder.imagen.setImageResource(R.drawable.ic_cinema)
-            "4"-> viewHolder.imagen.setImageResource(R.drawable.ic_love)
-            "5"-> viewHolder.imagen.setImageResource(R.drawable.ic_sport)
-            "6"-> viewHolder.imagen.setImageResource(R.drawable.ic_travel)
-            "7"-> viewHolder.imagen.setImageResource(R.drawable.ic_other)
+            "0"-> viewHolder.imagen.setImageResource(R.drawable.ic_study)
+            "1"-> viewHolder.imagen.setImageResource(R.drawable.ic_concert)
+            "2"-> viewHolder.imagen.setImageResource(R.drawable.ic_cinema)
+            "3"-> viewHolder.imagen.setImageResource(R.drawable.ic_love)
+            "4"-> viewHolder.imagen.setImageResource(R.drawable.ic_sport)
+            "5"-> viewHolder.imagen.setImageResource(R.drawable.ic_travel)
+            "6"-> viewHolder.imagen.setImageResource(R.drawable.ic_other)
         }
     }
 

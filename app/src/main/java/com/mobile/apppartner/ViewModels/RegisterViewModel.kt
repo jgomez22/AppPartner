@@ -2,10 +2,12 @@ package com.mobile.apppartner.ViewModels
 
 import android.app.Activity
 import android.arch.lifecycle.ViewModel
+import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.provider.MediaStore
+import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
@@ -25,6 +27,26 @@ class RegisterViewModel:ViewModel() {
 
     var bitmapDrawable:BitmapDrawable?=null
         private set
+
+    fun validateUser(pass:String,context:Context):Boolean{
+        if(uri==null){
+            Toast.makeText(context,"Sube una imagen de perfil.", Toast.LENGTH_LONG).show()
+            return false
+        }
+        if(pass=="" || pass==null) {
+            Toast.makeText(context,"Contraseña vacio.", Toast.LENGTH_LONG).show()
+            return false
+        }
+        if(pass.length<7){
+            Toast.makeText(context,"Contraseña debe tener mayor a 7 caracteres.", Toast.LENGTH_LONG).show()
+            return false
+        }
+        if(valueOfInterest?.size==0 || valueOfInterest==null){
+            Toast.makeText(context,"Selecione por lo menos un interés.", Toast.LENGTH_LONG).show()
+            return false
+        }
+        return true
+    }
 
     fun createAccount(email:String,password:String,activity: Activity):Observable<UserPartner>{
         this.apiClient = ApiClient(activity)
