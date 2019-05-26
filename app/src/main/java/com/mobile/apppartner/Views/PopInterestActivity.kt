@@ -16,14 +16,14 @@ import android.widget.RadioGroup
 
 class PopInterestActivity : AppCompatActivity() {
 
-    var values:MutableList<Boolean> = mutableListOf(false,false,false,false,false,false,false)
+    var intereses:MutableList<Boolean>?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pop_interest)
         supportActionBar?.hide()
-
+        intereses = intent.getBooleanArrayExtra("intereses").toMutableList()
         val dm = DisplayMetrics()
         windowManager.defaultDisplay.getMetrics(dm)
         val height = dm.heightPixels
@@ -34,6 +34,7 @@ class PopInterestActivity : AppCompatActivity() {
 
         btnAddInt.setOnClickListener {
             setResult(200, intent)
+            intent.putExtra("intereses",intereses!!.toBooleanArray())
             finish()
         }
 
@@ -48,12 +49,13 @@ class PopInterestActivity : AppCompatActivity() {
             ch.text = array[i].toString()
             ch.textSize= 18F
             ch.setTextColor(Color.BLACK);
+
             ch.setOnCheckedChangeListener(object :CompoundButton.OnCheckedChangeListener{
                 override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
-
+                    if(isChecked) intereses!![i]=true else intereses!![i]=false
                 }
             })
-
+            ch.isChecked = intereses!![i]
             lnCheckBox.addView(ch)
         }
     }

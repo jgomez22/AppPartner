@@ -27,6 +27,7 @@ class RegisterActivity : AppCompatActivity() {
     var uri:Uri?=null
     lateinit var campus:String
     lateinit var career:String
+    var intereses = mutableListOf<Boolean>(false,false,false,false,false,false,false)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
@@ -73,7 +74,7 @@ class RegisterActivity : AppCompatActivity() {
 
         this.btnAddInterest.setOnClickListener {
             val i = Intent(this,PopInterestActivity::class.java)
-
+            i.putExtra("intereses",intereses.toBooleanArray())
             this.startActivityForResult(i,200)
         }
 
@@ -106,7 +107,7 @@ class RegisterActivity : AppCompatActivity() {
             viewModel.onActivityResult(requestCode,resultCode,data,this)
         }
         if(requestCode==200){
-
+            intereses = data!!.getBooleanArrayExtra("intereses").toMutableList()
         }
     }
 }
