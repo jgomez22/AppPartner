@@ -20,7 +20,7 @@ import java.util.*
 class RegisterViewModel:ViewModel() {
 
     lateinit var apiClient:ApiClient
-
+    var valueOfInterest:MutableList<Int>?=null
     var uri:Uri? = null
 
     var bitmapDrawable:BitmapDrawable?=null
@@ -55,6 +55,7 @@ class RegisterViewModel:ViewModel() {
         val user = UserDatabase(uid,correo,nombre,uri,interes)
         user.campus=campus
         user.career=career
+        user.interest = valueOfInterest!!
         ref1.setValue(user).addOnSuccessListener {
             FirebaseAuth.getInstance().signOut()
 

@@ -28,6 +28,7 @@ class RegisterActivity : AppCompatActivity() {
     lateinit var campus:String
     lateinit var career:String
     var intereses = mutableListOf<Boolean>(false,false,false,false,false,false,false)
+    lateinit var valueOfInterest:MutableList<Int>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
@@ -57,6 +58,7 @@ class RegisterActivity : AppCompatActivity() {
             }
             val email = txtCorreoRe.text.toString()
             val password = txtPasswordRe.text.toString()
+            getInterest()
             viewModel.createAccount(email,password,this)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
@@ -109,5 +111,13 @@ class RegisterActivity : AppCompatActivity() {
         if(requestCode==200){
             intereses = data!!.getBooleanArrayExtra("intereses").toMutableList()
         }
+    }
+
+    fun getInterest(){
+        valueOfInterest = mutableListOf()
+        for(i in 0 until intereses.size){
+            if(intereses[i]==true) valueOfInterest.add(i)
+        }
+        viewModel.valueOfInterest = valueOfInterest
     }
 }

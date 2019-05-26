@@ -32,9 +32,7 @@ class MainViewModel:ViewModel() {
                 selectedFragment = ProfileFragment()
             }
         }
-        if (selectedFragment != null) {
-            context.beginTransaction().replace(R.id.fragment_container,selectedFragment!!).commit()
-        }
+            context.beginTransaction().replace(R.id.fragment_container,selectedFragment).commit()
     }
 
 }
