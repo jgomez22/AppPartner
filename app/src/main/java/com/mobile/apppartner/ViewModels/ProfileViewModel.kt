@@ -24,7 +24,7 @@ class ProfileViewModel:ViewModel() {
         activity?.finish()
     }
 
-    fun getUser(activity: ProfileFragment):Observable<UserDatabase>{
+    fun getUser():Observable<UserDatabase>{
         val user:Observable<UserDatabase> = Observable.create {observer ->
 
             val uid = FirebaseAuth.getInstance().uid

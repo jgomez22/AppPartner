@@ -22,8 +22,7 @@ class ProfileFragment: Fragment() {
     override fun onAttach(context: Context?) {
         super.onAttach(context)
         viewModel = ViewModelProviders.of(this).get(ProfileViewModel::class.java)
-        viewModel.getUser(this).subscribe({
-            us=it
+        viewModel.getUser().subscribe({
             setValues()
         },{
             print(it.toString())
@@ -36,18 +35,13 @@ class ProfileFragment: Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
-
-
-
-
         this.btnSalir.setOnClickListener {
             viewModel.signOut(activity!!)
         }
     }
     fun setValues(){
-        this.txtNombrePR.setText(us?.fullname.toString())
-        this.txtDescripcionPR.setText(us?.descripcion.toString())
-        Picasso.get().load(us?.url_img.toString()).transform(CircleTransformation()).into(this.imgPerfilPR)
+        this.txtNombrePR.setText(viewModel.u?.fullname.toString())
+        this.txtDescripcionPR.setText(viewModel.u?.descripcion.toString())
+        Picasso.get().load(viewModel.u?.url_img.toString()).transform(CircleTransformation()).into(this.imgPerfilPR)
     }
 }
