@@ -6,6 +6,9 @@ apply plugin: 'kotlin-android-extensions'
 
 apply plugin: 'com.google.gms.google-services'
 
+apply plugin: 'kotlin-kapt'
+
+
 android {
     compileSdkVersion 28
     defaultConfig {
@@ -15,6 +18,10 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
+    }
+    dataBinding{
+        enabled=true
     }
     buildTypes {
         release {
@@ -24,6 +31,9 @@ android {
     }
     packagingOptions {
         exclude 'META-INF/proguard/androidx-annotations.pro'
+    }
+    kapt {
+        generateStubs = true
     }
 }
 

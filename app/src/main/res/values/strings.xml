@@ -33,4 +33,8 @@
         <item>Viajes</item>
         <item>Otros</item>
     </string-array>
+    <string name="title_activity_chat">ChatActivity</string>
+    <string name="chats_heading">Messages</string>
+    <string name="hint_typing">Type here</string>
+    <string name="send_text">Send</string>
 </resources>
