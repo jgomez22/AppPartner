@@ -1,6 +1,7 @@
 package com.mobile.apppartner.models
 
 import android.app.Activity
+import android.net.Uri
 import android.view.View
 import com.google.firebase.auth.FirebaseAuth
 import com.microsoft.aad.adal.AuthenticationCallback
@@ -21,6 +22,36 @@ class ApiClient {
     }
     private lateinit var currentActivity:Activity
     private lateinit var auth: FirebaseAuth
+
+    fun validateUser(uri:Uri?,pass:String?,valueOfInterest:MutableList<Int>?):Observable<String>{
+        val observable:Observable<String> = Observable.create {observer->
+            if(uri==null){
+                observer.onNext("Sube una imagen de perfil.")
+                observer.onComplete()
+            } else {
+                if(pass=="" || pass==null) {
+                    observer.onNext("Contraseña vacio.")
+                    observer.onComplete()
+                } else {
+                    if(pass.length<7){
+                        observer.onNext("Contraseña debe tener mayor a 7 caracteres.")
+                        observer.onComplete()
+                    } else {
+                        if(valueOfInterest?.size==0 || valueOfInterest==null){
+                            observer.onNext("Selecione por lo menos un interés.")
+                            observer.onComplete()
+                        } else {
+                            observer.onNext("")
+                            observer.onComplete()
+                        }
+                    }
+                }
+
+            }
+
+        }
+        return observable
+    }
 
     fun createUser(email:String,password:String):Observable<UserPartner>{
         val observable:Observable<UserPartner> = Observable.create { observer ->

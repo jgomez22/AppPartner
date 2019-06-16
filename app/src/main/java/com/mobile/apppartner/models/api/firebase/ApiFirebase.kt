@@ -1,9 +1,11 @@
 package com.mobile.apppartner.models.api.firebase
 
+import android.app.Activity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.mobile.apppartner.models.Interes
 import com.mobile.apppartner.models.UserDatabase
+import com.mobile.apppartner.models.UserPartner
 import io.reactivex.Observable
 
 class ApiFirebase {
@@ -16,6 +18,27 @@ class ApiFirebase {
     constructor(){
         this.refFData = FirebaseDatabase.getInstance()
         this.fireAuth = FirebaseAuth.getInstance()
+    }
+
+    fun createUser(email:String,password:String,activity: Activity):Observable<UserPartner>{
+        val observable:Observable<UserPartner> = Observable.create { observer ->
+            fireAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(activity){
+                    task->
+                if(task.isSuccessful){
+                    var email:String? = fireAuth.currentUser?.email
+                    var isEmailVerified:Boolean? = fireAuth.currentUser?.isEmailVerified
+                    if(email!= null && isEmailVerified!=null){
+                        val meUser = UserPartner(email,isEmailVerified)
+                        observer.onNext(meUser)
+                        observer.onComplete()
+                    }
+                } else {
+                    val error:Throwable = Throwable("No se pudo crear la cuenta")
+                    observer.onError(error)
+                }
+            }
+        }
+        return observable
     }
 
     fun getInfoCurrentUser():Observable<UserDatabase>{
