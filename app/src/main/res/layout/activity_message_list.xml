@@ -1,9 +1,9 @@
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <variable name="vModel" type="com.mobile.apppartner.viewmodels.ChatViewModel"/>
-        <variable name="activity" type="com.mobile.apppartner.views.ChatActivity"/>
-        <import type="android.view.View"/>
+        <variable
+                name="viewModel"
+                type="com.mobile.apppartner.ui.message.MessageListViewModel" />
     </data>
 
     <LinearLayout
@@ -22,9 +22,10 @@
                 android:layout_height="match_parent">
 
             <android.support.v7.widget.RecyclerView
-                    android:id="@+id/recycler_view"
+                    android:id="@+id/message_list"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    app:adapter="@{viewModel.getMessageListAdapter()}"
                     android:layout_above="@+id/layout_input">
             </android.support.v7.widget.RecyclerView>
 
@@ -48,7 +49,6 @@
                         android:layout_width="@dimen/small_width"
                         android:layout_height="match_parent"
                         android:text="@string/send_text"
-                        android:onClick="@{() -> activity.sendMessage()}"
                         style="@style/regular_buttons"/>
             </LinearLayout>
 

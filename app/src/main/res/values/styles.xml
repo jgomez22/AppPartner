@@ -95,4 +95,11 @@
         <item name="android:background">@color/colorAccent</item>
     </style>
 
+    <style name="h2">
+        <item name="android:textColor">@color/colorTextBlack</item>
+    </style>
+
+    <style name="Light" parent="android:TextAppearance">
+    </style>
+
 </resources>

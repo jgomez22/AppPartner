@@ -96,6 +96,26 @@ class ApiClient {
         return observable
     }
 
+    fun sendMessage(email:String,password:String):Observable<UserPartner>{
+        val observable:Observable<UserPartner> = Observable.create { observer ->
+            this.auth.signInWithEmailAndPassword(email,password).addOnCompleteListener(this.currentActivity){
+                if(it.isSuccessful){
+                    var email:String? = this.auth.currentUser?.email
+                    var isEmailVerified:Boolean? = this.auth.currentUser?.isEmailVerified
+                    if(email!=null && isEmailVerified!=null){
+                        val meUser = UserPartner(email,isEmailVerified)
+                        observer.onNext(meUser)
+                        observer.onComplete()
+                    }
+                } else {
+                    val error:Throwable = Throwable("el email y password son incorrectos",null)
+                    observer.onError(error)
+                }
+            }
+        }
+        return observable
+    }
+
     private fun resetUIForConnect() {
         this.currentActivity.pbCargar.setVisibility(View.GONE)
     }
