@@ -1,4 +1,4 @@
-package com.mobile.apppartner.models.firebase
+package com.mobile.apppartner.models.api.firebase
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*

@@ -3,20 +3,14 @@ package com.mobile.apppartner.viewmodels
 import android.app.Activity
 import android.arch.lifecycle.ViewModel
 import android.content.Intent
-import android.widget.Toast
-import com.microsoft.aad.adal.AuthenticationCallback
-import com.microsoft.aad.adal.AuthenticationResult
 import com.mobile.apppartner.ApiOffice365.AuthenticationManager
-import com.mobile.apppartner.ApiOffice365.Constants
 import com.mobile.apppartner.views.RegisterActivity
 import com.mobile.apppartner.models.ApiClient
 import com.mobile.apppartner.models.UserPartner
 import com.mobile.apppartner.models.UserVal
-import com.mobile.apppartner.models.office365.ApiOffice365
+import com.mobile.apppartner.models.api.office365.ApiOffice365
 import com.mobile.apppartner.views.MainActivity
 import io.reactivex.Observable
-import java.net.URI
-import java.util.*
 
 class LoginViewModel:ViewModel() {
 

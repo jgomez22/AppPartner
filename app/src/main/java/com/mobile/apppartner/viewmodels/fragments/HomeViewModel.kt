@@ -2,7 +2,7 @@ package com.mobile.apppartner.viewmodels.fragments
 
 import android.arch.lifecycle.ViewModel
 import com.mobile.apppartner.models.Interes
-import com.mobile.apppartner.models.firebase.ApiFirebase
+import com.mobile.apppartner.models.api.firebase.ApiFirebase
 import io.reactivex.Observable
 
 class HomeViewModel:ViewModel() {

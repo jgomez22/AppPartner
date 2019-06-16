@@ -1,4 +1,4 @@
-package com.mobile.apppartner.models.office365
+package com.mobile.apppartner.models.api.office365
 
 import android.app.Activity
 import android.view.View
