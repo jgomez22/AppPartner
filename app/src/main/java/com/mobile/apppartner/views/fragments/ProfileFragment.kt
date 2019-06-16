@@ -30,7 +30,7 @@ class ProfileFragment: Fragment() {
             setValues()
         },{
             print(it.toString())
-        })
+        })//new commit
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
