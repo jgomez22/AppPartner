@@ -30,7 +30,6 @@
                     android:id="@+id/tv_user_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Laura Owens"
                     app:mutableText="@{viewModel.getName()}"
                     style="@style/h2"
                     android:textAppearance="@style/Light"
