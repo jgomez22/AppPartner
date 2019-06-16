@@ -39,11 +39,6 @@ class ProfileFragment: Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
-
-
-
-
         this.btnSalir.setOnClickListener {
             viewModel.signOut(activity!!)
         }

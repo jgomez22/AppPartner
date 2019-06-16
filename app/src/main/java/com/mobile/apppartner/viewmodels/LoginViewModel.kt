@@ -12,6 +12,7 @@ import com.mobile.apppartner.views.RegisterActivity
 import com.mobile.apppartner.models.ApiClient
 import com.mobile.apppartner.models.UserPartner
 import com.mobile.apppartner.models.UserVal
+import com.mobile.apppartner.models.office365.ApiOffice365
 import com.mobile.apppartner.views.MainActivity
 import io.reactivex.Observable
 import java.net.URI
@@ -20,6 +21,7 @@ import java.util.*
 class LoginViewModel:ViewModel() {
 
     lateinit var apiClient:ApiClient
+    lateinit var apiOffice365:ApiOffice365
     lateinit var activity:Activity
 
     fun goToRegister(correo:String,fullname:String,activity:Activity){
@@ -40,54 +42,11 @@ class LoginViewModel:ViewModel() {
         return apiClient.singIn(email,password)
     }
 
-    fun onConnectButtonClick(act:Activity){
-        this.activity = act
-        //showConnectingInProgressUI()
-        //check that client id and redirect have been set correctly
-        try {
-            UUID.fromString(Constants.CLIENT_ID)
-            URI.create(Constants.REDIRECT_URI)
-        } catch (e: IllegalArgumentException) {
-            Toast.makeText(
-                activity.applicationContext, "Ocurrio un error", Toast.LENGTH_LONG
-            ).show()
-            //resetUIForConnect()
-            return
-        }
-
-        AuthenticationManager.getInstance().setContextActivity(activity)
-        AuthenticationManager.getInstance().connect(
-            object : AuthenticationCallback<AuthenticationResult> {
-                /**
-                 * If the connection is successful, the activity extracts the username and
-                 * displayableId values from the authentication result object and sends them
-                 * to the SendMail activity.
-                 * @param result The authentication result object that contains information about
-                 * the user and the tokens.
-                 */
-                override fun onSuccess(result: AuthenticationResult) {
-                    goToRegister(result.userInfo.displayableId.toString(),
-                        result.userInfo.givenName.toString()+" "+result.userInfo.familyName.toString(),
-                        activity)
-
-                    //resetUIForConnect()
-                }
-
-                override fun onError(e: Exception) {
-
-                    //showConnectErrorUI()
-                }
-            })
-    }
-
     fun signInOffice365(activity:Activity):Observable<UserVal>{
-        this.apiClient = ApiClient(activity)
-        return apiClient.signInOffice365()
+        this.apiOffice365 = ApiOffice365()
+        return apiOffice365.signInOffice365(activity)
     }
 
-    /*
-
-    */
     fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         AuthenticationManager
             .getInstance()
