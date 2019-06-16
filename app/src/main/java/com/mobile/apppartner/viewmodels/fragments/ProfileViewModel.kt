@@ -7,6 +7,7 @@ import com.example.appprueba.ProfileFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.mobile.apppartner.models.UserDatabase
+import com.mobile.apppartner.models.firebase.ApiFirebase
 import com.mobile.apppartner.views.LoginActivity
 import io.reactivex.Observable
 
@@ -21,26 +22,9 @@ class ProfileViewModel:ViewModel() {
         activity?.finish()
     }
 
-    fun getUser(activity: ProfileFragment):Observable<UserDatabase>{
-        val user:Observable<UserDatabase> = Observable.create {observer ->
-
-            val uid = FirebaseAuth.getInstance().uid
-            ref = FirebaseDatabase.getInstance().getReference("users").child(uid!!)
-
-            ref.addListenerForSingleValueEvent(object : ValueEventListener {
-                override fun onDataChange(p0: DataSnapshot) {
-                    u = p0.getValue(UserDatabase::class.java)
-
-                    observer.onNext(u!!)
-                    observer.onComplete()
-                }
-                override fun onCancelled(p0: DatabaseError) {
-                    print(p0.message)
-                }
-            })
-
-        }
-        return user
+    fun getInfoCurrentUser(activity: ProfileFragment):Observable<UserDatabase>{
+        val apiFirebase =ApiFirebase()
+        return apiFirebase.getInfoCurrentUser()
     }
 
 }

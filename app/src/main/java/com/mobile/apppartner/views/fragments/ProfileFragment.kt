@@ -12,6 +12,7 @@ import com.mobile.apppartner.models.UserDatabase
 import com.mobile.apppartner.R
 import com.mobile.apppartner.viewmodels.fragments.ProfileViewModel
 import com.squareup.picasso.Picasso
+import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.fragment_profile.*
 
 class ProfileFragment: Fragment() {
@@ -22,7 +23,9 @@ class ProfileFragment: Fragment() {
     override fun onAttach(context: Context?) {
         super.onAttach(context)
         viewModel = ViewModelProviders.of(this).get(ProfileViewModel::class.java)
-        viewModel.getUser(this).subscribe({
+        viewModel.getInfoCurrentUser(this)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
             us=it
             setValues()
         },{
