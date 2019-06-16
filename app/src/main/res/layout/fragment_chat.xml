@@ -18,17 +18,5 @@
                 app:adapter="@{viewModel.getUserMatchListAdapter()}"
                 android:overScrollMode="never"/>
 
-        <Button
-          android:text="CHATEAR"
-          android:layout_width="300dp"
-          android:layout_height="45dp" android:id="@+id/btnChat"
-          android:background="@drawable/btn_corner_red" android:textAllCaps="false" android:textSize="18sp"
-          android:textColor="@android:color/background_light" android:gravity="center"
-          android:layout_marginStart="8dp"
-          app:layout_constraintStart_toStartOf="parent" android:layout_marginLeft="8dp" android:layout_marginEnd="8dp"
-          app:layout_constraintEnd_toEndOf="parent" android:layout_marginRight="8dp"
-          android:layout_marginBottom="20dp" app:layout_constraintBottom_toBottomOf="parent"/>
-
-
     </android.support.constraint.ConstraintLayout>
 </layout>

@@ -12,9 +12,7 @@ import android.view.ViewGroup
 import com.mobile.apppartner.R
 import com.mobile.apppartner.databinding.FragmentChatBinding
 import com.mobile.apppartner.ui.chat.UserMatchListViewModel
-import com.mobile.apppartner.ui.message.MessageListActivity
-import com.mobile.apppartner.ui.message.ViewModelFactory
-import kotlinx.android.synthetic.main.fragment_chat.*
+import com.mobile.apppartner.ui.chat.ViewModelChatFactory
 
 class ChatFragment : Fragment() {
 
@@ -24,17 +22,8 @@ class ChatFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_chat, container, false)
         binding.userMatchList.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
-        viewModel = ViewModelProviders.of(this, ViewModelFactory()).get(UserMatchListViewModel::class.java)
+        viewModel = ViewModelProviders.of(this, ViewModelChatFactory()).get(UserMatchListViewModel::class.java)
         binding.viewModel = viewModel
         return binding.root
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        this.btnChat.setOnClickListener {
-            val intent = Intent(getActivity(), MessageListActivity::class.java)
-            getActivity()!!.startActivity(intent)
-        }
-
     }
 }

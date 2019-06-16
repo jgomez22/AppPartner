@@ -1,6 +1,7 @@
 package com.mobile.apppartner.ui.message
 
 import android.arch.lifecycle.ViewModel
+import android.content.Intent.getIntent
 import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
@@ -12,14 +13,14 @@ import io.reactivex.Observable
 import io.reactivex.disposables.Disposable
 import java.util.*
 
-class MessageListViewModel : ViewModel() {
+class MessageListViewModel(private val uid: String) : ViewModel() {
 
     lateinit var ref: DatabaseReference
     val messageListAdapter: MessageListAdapter = MessageListAdapter()
     private lateinit var subscription: Disposable
 
     init {
-        loadPosts()
+        loadMessages()
     }
 
     override fun onCleared() {
@@ -27,19 +28,24 @@ class MessageListViewModel : ViewModel() {
         subscription.dispose()
     }
 
-    private fun loadPosts(){
+    private fun loadMessages() {
         val user: Observable<UserDatabase> = Observable.create { observer ->
 
-            val uid = FirebaseAuth.getInstance().uid
-            ref = FirebaseDatabase.getInstance().getReference("messages").child(uid!!)
+            val myUid = FirebaseAuth.getInstance().uid
+            ref = FirebaseDatabase.getInstance().getReference("messages")
 
-            ref.addListenerForSingleValueEvent(object : ValueEventListener {
-                override fun onDataChange(p0: DataSnapshot) {
-                    Log.d("TAG", p0.toString())
-
-                    val messageList: List<Message> = listOf(Message("1", "1234", Date(1234), "Hola amigos"))
-
-                    messageListAdapter.updateMessageList(messageList)
+            ref.addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    var list: List<Message?> = ArrayList<Message>()
+                    for (data in dataSnapshot.children) {
+                        val value: Message? = data.getValue(Message::class.java)
+                        if (value!!.recipientId.equals(myUid) && value!!.senderId.equals(uid) ||
+                            value!!.recipientId.equals(uid) && value!!.senderId.equals(myUid)
+                        ) {
+                            list += value
+                        }
+                    }
+                    messageListAdapter.updateMessageList(list)
                 }
 
                 override fun onCancelled(p0: DatabaseError) {

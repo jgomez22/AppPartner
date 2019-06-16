@@ -18,9 +18,11 @@ class MessageListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_message_list)
 
+        val uid = intent.getStringExtra("uidDestination");
+
         binding = DataBindingUtil.setContentView(this, R.layout.activity_message_list)
         binding.messageList.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        viewModel = ViewModelProviders.of(this, ViewModelFactory()).get(MessageListViewModel::class.java)
+        viewModel = ViewModelProviders.of(this, ViewModelFactory(uid)).get(MessageListViewModel::class.java)
         binding.viewModel = viewModel
     }
 }

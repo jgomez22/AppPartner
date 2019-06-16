@@ -10,10 +10,10 @@ import com.mobile.apppartner.models.Message
 
 class MessageListAdapter : RecyclerView.Adapter<MessageListAdapter.ViewHolder>() {
 
-    private lateinit var messageList: List<Message>
+    private lateinit var messageList: List<Message?>
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(messageList[position])
+        holder.bind(messageList[position]!!)
     }
 
     override fun getItemCount(): Int {
@@ -26,7 +26,7 @@ class MessageListAdapter : RecyclerView.Adapter<MessageListAdapter.ViewHolder>()
         return ViewHolder(binding)
     }
 
-    fun updateMessageList(messageList: List<Message>) {
+    fun updateMessageList(messageList: List<Message?>) {
         this.messageList = messageList
         notifyDataSetChanged()
     }

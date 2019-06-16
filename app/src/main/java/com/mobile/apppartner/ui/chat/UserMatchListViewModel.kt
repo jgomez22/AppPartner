@@ -17,7 +17,7 @@ class UserMatchListViewModel : ViewModel() {
     private lateinit var subscription: Disposable
 
     init {
-        loadPosts()
+        loadUserMatchList()
     }
 
     override fun onCleared() {
@@ -25,7 +25,7 @@ class UserMatchListViewModel : ViewModel() {
         subscription.dispose()
     }
 
-    private fun loadPosts() {
+    private fun loadUserMatchList() {
         val user: Observable<UserDatabase> = Observable.create { observer ->
 
             val uid = FirebaseAuth.getInstance().uid

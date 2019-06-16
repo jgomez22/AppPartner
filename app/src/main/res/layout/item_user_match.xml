@@ -9,7 +9,10 @@
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                     android:orientation="vertical" android:layout_width="match_parent"
                     android:layout_height="90dp"
-                    android:background="@drawable/bg_item_list">
+                    android:background="@drawable/bg_item_list"
+                    android:id="@+id/er"
+                    android:text="fe"
+                    app:onUserMatchOnclick="@{viewModel.getName()}">
 
         <ImageView
                 android:id="@+id/iv_user_photo"
@@ -26,6 +29,12 @@
                 android:layout_toRightOf="@+id/iv_user_photo"
                 android:background="@drawable/bg_bottom_grey"
                 android:gravity="center_vertical">
+            <TextView
+                    android:id="@+id/uid"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    app:mutableText="@{viewModel.getId()}"/>
             <TextView
                     android:id="@+id/tv_user_name"
                     android:layout_width="wrap_content"
