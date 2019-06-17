@@ -3,6 +3,7 @@ package com.mobile.apppartner.ui.message
 import android.databinding.DataBindingUtil
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import com.mobile.apppartner.R
 import com.mobile.apppartner.databinding.ItemMessageBinding
@@ -42,6 +43,17 @@ class MessageListAdapter : RecyclerView.Adapter<MessageListAdapter.ViewHolder>()
         fun bind(message: Message) {
             viewModel.bind(message)
             binding.viewModel = viewModel
+            if (message.isMine){
+                binding.txtMyMessage.visibility = View.VISIBLE
+                binding.txtMyMessageTime.visibility = View.VISIBLE
+                binding.txtOtherMessage.visibility = View.GONE
+                binding.txtOtherMessageTime.visibility = View.GONE
+            }else{
+                binding.txtMyMessage.visibility = View.GONE
+                binding.txtMyMessageTime.visibility = View.GONE
+                binding.txtOtherMessage.visibility = View.VISIBLE
+                binding.txtOtherMessageTime.visibility = View.VISIBLE
+            }
         }
     }
 

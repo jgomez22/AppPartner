@@ -1,16 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout xmlns:tools="http://schemas.android.com/tools" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:tools="http://schemas.android.com/tools" xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <variable
                 name="viewModel"
-                type="com.mobile.apppartner.ui.message.MessageViewModel" />
+                type="com.mobile.apppartner.ui.message.MessageViewModel"/>
     </data>
 
     <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="8dp">
+
+        <TextView
+                android:id="@+id/txtMyMessage"
+                app:mutableText="@{viewModel.getMessageValue()}"
+                android:background="@drawable/my_message_bubble"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxWidth="240dp"
+                android:padding="15dp"
+                android:elevation="5dp"
+                android:textColor="#ffffff"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="5dp"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+                android:id="@+id/txtMyMessageTime"
+                android:text="12:00 PM"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="10sp"
+                android:textStyle="bold"
+                android:layout_marginRight="10dp"
+                app:layout_constraintBottom_toBottomOf="@+id/txtMyMessage"
+                app:layout_constraintRight_toLeftOf="@+id/txtMyMessage"/>
 
         <TextView
                 android:id="@+id/txtOtherMessage"
@@ -22,18 +49,19 @@
                 android:padding="15dp"
                 android:elevation="5dp"
                 android:textColor="#ffffff"
-                tools:ignore="MissingConstraints" tools:layout_editor_absoluteY="8dp"
-                tools:layout_editor_absoluteX="0dp"/>
+                android:layout_marginTop="4dp"
+                tools:ignore="MissingConstraints"/>
 
         <TextView
                 android:id="@+id/txtOtherMessageTime"
+                android:text="12:00 PM"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="10sp"
                 android:textStyle="bold"
-                app:mutableText="@{viewModel.getMessageValue()}"
-                app:layout_constraintBottom_toBottomOf="@+id/txtOtherMessage" tools:ignore="MissingConstraints"
-                tools:layout_editor_absoluteX="109dp"/>
+                app:layout_constraintLeft_toRightOf="@+id/txtOtherMessage"
+                android:layout_marginLeft="10dp"
+                app:layout_constraintBottom_toBottomOf="@+id/txtOtherMessage"/>
 
     </android.support.constraint.ConstraintLayout>
 

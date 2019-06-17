@@ -1,9 +1,7 @@
 package com.mobile.apppartner.utils
 
-import android.app.PendingIntent.getActivity
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.Observer
-import android.content.Context
 import android.content.Intent
 import android.databinding.BindingAdapter
 import android.support.v7.widget.RecyclerView
@@ -13,7 +11,6 @@ import android.view.ViewGroup
 import android.widget.RelativeLayout
 import android.widget.TextView
 import com.mobile.apppartner.ui.message.MessageListActivity
-import kotlinx.android.synthetic.main.activity_register.view.*
 import net.gahfy.mvvmposts.utils.extension.getParentActivity
 
 @BindingAdapter("adapter")
