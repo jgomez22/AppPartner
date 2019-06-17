@@ -1,15 +1,18 @@
 package com.mobile.apppartner.views.adapter
 
+import android.content.Context
+import android.support.v4.app.Fragment
 import com.mobile.apppartner.R
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.mobile.apppartner.models.Interes
 
 public class InteresAdapter:RecyclerView.Adapter<viewHolder> {
 
-    lateinit var list:MutableList<Interes>
+    var list:MutableList<Interes>
 
     constructor(list:MutableList<Interes>){
         this.list=list
@@ -33,6 +36,9 @@ public class InteresAdapter:RecyclerView.Adapter<viewHolder> {
             "4"-> viewHolder.imagen.setImageResource(R.drawable.ic_sport)
             "5"-> viewHolder.imagen.setImageResource(R.drawable.ic_travel)
             "6"-> viewHolder.imagen.setImageResource(R.drawable.ic_other)
+        }
+        viewHolder.imagen.setOnClickListener {
+            
         }
     }
 

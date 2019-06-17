@@ -33,9 +33,12 @@ class HomeFragment: Fragment() {
 
         viewModel = ViewModelProviders.of(this).get(HomeViewModel::class.java)
 
-        viewModel.getInteres().observeOn(AndroidSchedulers.mainThread()).subscribe({
+        viewModel.getInteres()
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
                 viewModel.interesArray = it
-                getInteres()
+                viewModel.prueba(this)
+                //getInteres()
             },{
                 print(it.message)
             }
