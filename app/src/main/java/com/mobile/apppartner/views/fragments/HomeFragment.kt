@@ -33,6 +33,22 @@ class HomeFragment: Fragment() {
 
         viewModel = ViewModelProviders.of(this).get(HomeViewModel::class.java)
 
+        viewModel.getInfoCurrentUser()
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                print(it)
+                viewModel.userDatabase = it
+                viewModel.getRamdonUser()
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({
+                        print(it)
+                    },{
+
+                    })
+            },{
+                print(it.toString())
+            })//new commit
+
         viewModel.getInteres()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({

@@ -4,6 +4,7 @@ import android.arch.lifecycle.ViewModel
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import com.mobile.apppartner.models.Interes
+import com.mobile.apppartner.models.UserDatabase
 import com.mobile.apppartner.models.api.firebase.ApiFirebase
 import com.mobile.apppartner.views.adapter.InteresAdapter
 import io.reactivex.Observable
@@ -13,6 +14,7 @@ class HomeViewModel:ViewModel() {
 
     var interesArray:MutableList<Interes> = mutableListOf()
     lateinit var currentFragment:Fragment
+    var userDatabase: UserDatabase?=null
 
     fun prueba(fragment:Fragment){
         this.currentFragment=fragment
@@ -28,4 +30,13 @@ class HomeViewModel:ViewModel() {
         return apiFirebase.getInteres()
     }
 
+    fun getInfoCurrentUser():Observable<UserDatabase>{
+        val apiFirebase = ApiFirebase()
+        return apiFirebase.getInfoCurrentUser()
+    }
+
+    fun getRamdonUser():Observable<UserDatabase>{
+        val apiFirebase = ApiFirebase()
+        return apiFirebase.getRamdonUser(userDatabase!!.campus)
+    }
 }

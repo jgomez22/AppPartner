@@ -41,6 +41,23 @@ class ApiFirebase {
         return observable
     }
 
+    fun getRamdonUser(campus:String):Observable<UserDatabase>{
+        val userObservable:Observable<UserDatabase> = Observable.create{observer->
+            uid = fireAuth.uid!!
+            val a = refFData.getReference("users/")
+            val query:Query = a.orderByChild("campus").equalTo(campus)
+            query.addListenerForSingleValueEvent(object:ValueEventListener{
+                override fun onCancelled(p0: DatabaseError) {
+                }
+                override fun onDataChange(p0: DataSnapshot) {
+                    print(p0)
+                    print(p0)
+                }
+            })
+        }
+        return userObservable
+    }
+
     fun getInfoCurrentUser():Observable<UserDatabase>{
         val userObservable:Observable<UserDatabase> = Observable.create{observer->
             uid = fireAuth.uid!!
