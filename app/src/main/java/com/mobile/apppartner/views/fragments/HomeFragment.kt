@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.google.firebase.database.*
 import com.mobile.apppartner.models.Interes
 import com.mobile.apppartner.R
@@ -43,7 +44,7 @@ class HomeFragment: Fragment() {
                     .subscribe({
                         print(it)
                     },{
-
+                        Toast.makeText(this.context,it.message,Toast.LENGTH_LONG).show()
                     })
             },{
                 print(it.toString())

@@ -54,7 +54,8 @@ class ApiFirebase {
                 }
                 override fun onDataChange(p0: DataSnapshot) {
                     var u = UserDatabase()
-                    if(p0.exists()){
+
+                    if(p0.exists() && p0.childrenCount.toInt()!=1){
                         for(us in p0.children){
                             u = us.getValue(UserDatabase::class.java)!!
                             arrayUser.add(u)
