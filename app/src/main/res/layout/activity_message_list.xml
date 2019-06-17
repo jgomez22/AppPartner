@@ -38,7 +38,7 @@
                     style="@style/regular_layouts">
 
                 <EditText
-                        android:id="@+id/edittext_chat_message"
+                        android:id="@+id/message"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -46,6 +46,7 @@
                         android:layout_marginRight="@dimen/margin_average"
                         style="@style/regular_editTexts"/>
                 <Button
+                        android:id="@+id/btnSend"
                         android:layout_width="@dimen/small_width"
                         android:layout_height="match_parent"
                         android:text="@string/send_text"

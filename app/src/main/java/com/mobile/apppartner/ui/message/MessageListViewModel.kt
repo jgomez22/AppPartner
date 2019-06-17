@@ -3,6 +3,9 @@ package com.mobile.apppartner.ui.message
 import android.arch.lifecycle.ViewModel
 import android.content.Intent.getIntent
 import android.util.Log
+import android.view.View
+import android.widget.EditText
+import android.widget.TextView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.mobile.apppartner.models.Message
@@ -11,6 +14,7 @@ import com.mobile.apppartner.models.UserDatabase
 import io.reactivex.Observable
 
 import io.reactivex.disposables.Disposable
+import java.time.LocalDateTime
 import java.util.*
 
 class MessageListViewModel(private val uid: String) : ViewModel() {
@@ -56,4 +60,9 @@ class MessageListViewModel(private val uid: String) : ViewModel() {
         subscription = user.subscribe();
     }
 
+    fun sendMessage(message : String) {
+        val myUid = FirebaseAuth.getInstance().uid
+        ref = FirebaseDatabase.getInstance().getReference("messages")
+        ref.push().setValue(Message(uid, myUid, Date(), message, true))
+    }
 }

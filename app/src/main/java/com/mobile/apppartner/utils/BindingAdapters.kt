@@ -22,31 +22,48 @@ fun setAdapter(view: RecyclerView, adapter: RecyclerView.Adapter<*>) {
 }
 
 @BindingAdapter("mutableVisibility")
-fun setMutableVisibility(view: View,  visibility: MutableLiveData<Int>?) {
-    val parentActivity:AppCompatActivity? = view.getParentActivity()
-    if(parentActivity != null && visibility != null) {
-        visibility.observe(parentActivity, Observer { value -> view.visibility = value?:View.VISIBLE})
+fun setMutableVisibility(view: View, visibility: MutableLiveData<Int>?) {
+    val parentActivity: AppCompatActivity? = view.getParentActivity()
+    if (parentActivity != null && visibility != null) {
+        visibility.observe(parentActivity, Observer { value -> view.visibility = value ?: View.VISIBLE })
     }
 }
 
 @BindingAdapter("mutableText")
-fun setMutableText(view: TextView,  text: MutableLiveData<String>?) {
-    val parentActivity:AppCompatActivity? = view.getParentActivity()
-    if(parentActivity != null && text != null) {
+fun setMutableText(view: TextView, text: MutableLiveData<String>?) {
+    val parentActivity: AppCompatActivity? = view.getParentActivity()
+    if (parentActivity != null && text != null) {
         text.observe(parentActivity, Observer { value ->
-            view.text = value?:""})
+            view.text = value ?: ""
+        })
     }
 }
 
 @BindingAdapter("onUserMatchOnclick")
 fun onUserMatchOnclick(relativeLayout: RelativeLayout, text: MutableLiveData<String>?) {
-    val parentActivity:AppCompatActivity? = relativeLayout.getParentActivity()
-    if(parentActivity != null && text != null) {
+    val parentActivity: AppCompatActivity? = relativeLayout.getParentActivity()
+    if (parentActivity != null && text != null) {
         text.observe(parentActivity, Observer { value ->
             relativeLayout.setOnClickListener {
-                val intent = Intent(relativeLayout.context,MessageListActivity::class.java)
-                intent.putExtra("uidDestination" , ((relativeLayout.getChildAt(1) as ViewGroup).getChildAt(0) as TextView).text)
+                val intent = Intent(relativeLayout.context, MessageListActivity::class.java)
+                intent.putExtra(
+                    "uidDestination",
+                    ((relativeLayout.getChildAt(1) as ViewGroup).getChildAt(0) as TextView).text
+                )
                 relativeLayout.context.startActivity(intent)
-            }})
+            }
+        })
     }
+}
+
+@BindingAdapter("sendMessage")
+fun sendMessage(view: TextView, text: MutableLiveData<String>?) {
+
+    val parentActivity: AppCompatActivity? = view.getParentActivity()
+    if (parentActivity != null && text != null) {
+        text.observe(parentActivity, Observer { value ->
+            view.text = value ?: ""
+        })
+    }
+
 }

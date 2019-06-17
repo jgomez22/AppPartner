@@ -31,6 +31,11 @@ class MessageListAdapter : RecyclerView.Adapter<MessageListAdapter.ViewHolder>()
         notifyDataSetChanged()
     }
 
+    fun sendMessage(message: Message) {
+        this.messageList = messageList
+        notifyDataSetChanged()
+    }
+
     class ViewHolder(private val binding: ItemMessageBinding) : RecyclerView.ViewHolder(binding.root) {
         private val viewModel = MessageViewModel()
 
