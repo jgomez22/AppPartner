@@ -35,7 +35,7 @@ class HomeViewModel:ViewModel() {
         return apiFirebase.getInfoCurrentUser()
     }
 
-    fun getRamdonUser():Observable<UserDatabase>{
+    fun getRamdonUser():Observable<MutableList<UserDatabase>>{
         val apiFirebase = ApiFirebase()
         return apiFirebase.getRamdonUser(userDatabase!!.campus)
     }

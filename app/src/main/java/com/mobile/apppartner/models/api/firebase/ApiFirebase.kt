@@ -41,17 +41,29 @@ class ApiFirebase {
         return observable
     }
 
-    fun getRamdonUser(campus:String):Observable<UserDatabase>{
-        val userObservable:Observable<UserDatabase> = Observable.create{observer->
+    fun getRamdonUser(campus:String):Observable<MutableList<UserDatabase>>{
+        var arrayUser:MutableList<UserDatabase> = mutableListOf<UserDatabase>()
+
+        val userObservable:Observable<MutableList<UserDatabase>> = Observable.create{observer->
             uid = fireAuth.uid!!
+
             val a = refFData.getReference("users/")
             val query:Query = a.orderByChild("campus").equalTo(campus)
             query.addListenerForSingleValueEvent(object:ValueEventListener{
                 override fun onCancelled(p0: DatabaseError) {
                 }
                 override fun onDataChange(p0: DataSnapshot) {
-                    print(p0)
-                    print(p0)
+                    var u = UserDatabase()
+                    if(p0.exists()){
+                        for(us in p0.children){
+                            u = us.getValue(UserDatabase::class.java)!!
+                            arrayUser.add(u)
+                        }
+                        observer.onNext(arrayUser)
+                    } else {
+                        val error = Throwable("No se encontraron resultados")
+                        observer.onError(error)
+                    }
                 }
             })
         }
