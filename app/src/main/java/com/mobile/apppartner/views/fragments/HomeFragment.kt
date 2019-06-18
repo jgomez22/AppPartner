@@ -42,7 +42,8 @@ class HomeFragment: Fragment() {
                 viewModel.getRamdonUser()
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({
-                        print(it)
+                        viewModel.userArray = it
+                        viewModel.setUserIntoCardProfile()
                     },{
                         Toast.makeText(this.context,it.message,Toast.LENGTH_LONG).show()
                     })
@@ -61,6 +62,11 @@ class HomeFragment: Fragment() {
             }
         ).isDisposed
 
+        btnNext.setOnClickListener {
+            if(viewModel.userArray.size!=0){
+                viewModel.setUserIntoCardProfile()
+            }
+        }
     }
 
     fun getInteres(){
