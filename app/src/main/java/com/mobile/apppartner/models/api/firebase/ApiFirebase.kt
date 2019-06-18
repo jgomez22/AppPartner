@@ -41,8 +41,15 @@ class ApiFirebase {
         return observable
     }
 
+    fun getRamdonUserWithInterest(campus:String):Observable<MutableList<UserDatabase>>{
+        val userObservable:Observable<MutableList<UserDatabase>> = Observable.create{observer->
+
+        }
+        return userObservable
+    }
+
     fun getRamdonUser(campus:String):Observable<MutableList<UserDatabase>>{
-        var arrayUser:MutableList<UserDatabase> = mutableListOf<UserDatabase>()
+        var arrayUser:MutableList<UserDatabase> = mutableListOf()
 
         val userObservable:Observable<MutableList<UserDatabase>> = Observable.create{observer->
             uid = fireAuth.uid!!
@@ -58,7 +65,7 @@ class ApiFirebase {
                     if(p0.exists() && p0.childrenCount.toInt()!=1){
                         for(us in p0.children){
                             u = us.getValue(UserDatabase::class.java)!!
-                            arrayUser.add(u)
+                            if(!u.uid.equals(fireAuth.uid.toString()))arrayUser.add(u)
                         }
                         observer.onNext(arrayUser)
                     } else {
