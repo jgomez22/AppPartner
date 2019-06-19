@@ -19,8 +19,10 @@ class HomeViewModel:ViewModel() {
 
     var interesArray:MutableList<Interes> = mutableListOf()
     var userArray:MutableList<UserDatabase> = mutableListOf()
+    var userArrayFilterInterest:MutableList<UserDatabase> = mutableListOf()
     lateinit var currentFragment:Fragment
     var userDatabase: UserDatabase?=null
+    var indexOfInterest:Int?=null
 
     fun prueba(fragment:Fragment){
         this.currentFragment=fragment
@@ -35,7 +37,8 @@ class HomeViewModel:ViewModel() {
                 currentFragment.rvInteresesHO,
                 object :RecyclerItemClickListenr.OnItemClickListener{
                     override fun onItemClick(view: View, position: Int) {
-                        print(position.toString())//por fin :c xD
+                        indexOfInterest = position
+                        getRamdonUserWithInterest()
                     }
 
                     override fun onItemLongClick(view: View?, position: Int) {
@@ -69,6 +72,18 @@ class HomeViewModel:ViewModel() {
     fun getRamdonUser():Observable<MutableList<UserDatabase>>{
         val apiFirebase = ApiFirebase()
         return apiFirebase.getRamdonUser(userDatabase!!.campus)
+    }
+
+    fun getRamdonUserWithInterest(){
+        userArrayFilterInterest = mutableListOf()
+        for(a in userArray){
+            for(b in a.interest){
+                if(b.equals(indexOfInterest)){
+                    userArrayFilterInterest.add(a)
+                }
+            }
+        }
+        print(userArrayFilterInterest.toString())
     }
 
     fun setUserIntoCardProfile(){
