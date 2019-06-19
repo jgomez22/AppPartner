@@ -4,11 +4,13 @@ import android.app.Activity
 import android.arch.lifecycle.ViewModel
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
+import android.view.View
 import com.mobile.apppartner.Components.CircleTransformation
 import com.mobile.apppartner.models.Interes
 import com.mobile.apppartner.models.UserDatabase
 import com.mobile.apppartner.models.api.firebase.ApiFirebase
 import com.mobile.apppartner.views.adapter.InteresAdapter
+import com.mobile.apppartner.views.adapter.RecyclerItemClickListenr
 import com.squareup.picasso.Picasso
 import io.reactivex.Observable
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -27,6 +29,31 @@ class HomeViewModel:ViewModel() {
         layout.orientation = LinearLayoutManager.HORIZONTAL
         currentFragment.rvInteresesHO.setAdapter(InteresAdapter(interesArray))
         currentFragment.rvInteresesHO.setLayoutManager(layout)
+
+        currentFragment.rvInteresesHO
+            .addOnItemTouchListener(RecyclerItemClickListenr(currentFragment.context!!,
+                currentFragment.rvInteresesHO,
+                object :RecyclerItemClickListenr.OnItemClickListener{
+                    override fun onItemClick(view: View, position: Int) {
+                        print(position.toString())//por fin :c xD
+                    }
+
+                    override fun onItemLongClick(view: View?, position: Int) {
+                        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                    }
+
+                }))
+        /*
+        recyclerView.addOnItemTouchListener(RecyclerItemClickListenr(this, recyclerView, object : RecyclerItemClickListenr.OnItemClickListener {
+
+        override fun onItemClick(view: View, position: Int) {
+            //do your work here..
+        }
+        override fun onItemLongClick(view: View?, position: Int) {
+            TODO("do nothing")
+        }
+    }))
+         */
     }
 
     fun getInteres():Observable<MutableList<Interes>>{
