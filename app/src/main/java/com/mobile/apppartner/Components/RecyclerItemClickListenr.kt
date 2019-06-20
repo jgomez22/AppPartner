@@ -1,4 +1,4 @@
-package com.mobile.apppartner.views.adapter
+package com.mobile.apppartner.Components
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView

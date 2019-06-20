@@ -1,16 +1,16 @@
 package com.mobile.apppartner.viewmodels.fragments
 
-import android.app.Activity
 import android.arch.lifecycle.ViewModel
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
+import android.widget.Toast
 import com.mobile.apppartner.Components.CircleTransformation
 import com.mobile.apppartner.models.Interes
 import com.mobile.apppartner.models.UserDatabase
 import com.mobile.apppartner.models.api.firebase.ApiFirebase
 import com.mobile.apppartner.views.adapter.InteresAdapter
-import com.mobile.apppartner.views.adapter.RecyclerItemClickListenr
+import com.mobile.apppartner.Components.RecyclerItemClickListenr
 import com.squareup.picasso.Picasso
 import io.reactivex.Observable
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -19,7 +19,7 @@ class HomeViewModel:ViewModel() {
 
     var interesArray:MutableList<Interes> = mutableListOf()
     var userArray:MutableList<UserDatabase> = mutableListOf()
-    var userArrayFilterInterest:MutableList<UserDatabase> = mutableListOf()
+    var userArrayFilterInterest:MutableList<UserDatabase>? = null
     lateinit var currentFragment:Fragment
     var userDatabase: UserDatabase?=null
     var indexOfInterest:Int?=null
@@ -33,19 +33,21 @@ class HomeViewModel:ViewModel() {
         currentFragment.rvInteresesHO.setLayoutManager(layout)
 
         currentFragment.rvInteresesHO
-            .addOnItemTouchListener(RecyclerItemClickListenr(currentFragment.context!!,
-                currentFragment.rvInteresesHO,
-                object :RecyclerItemClickListenr.OnItemClickListener{
-                    override fun onItemClick(view: View, position: Int) {
-                        indexOfInterest = position
-                        getRamdonUserWithInterest()
-                    }
+            .addOnItemTouchListener(
+                RecyclerItemClickListenr(currentFragment.context!!,
+                    currentFragment.rvInteresesHO,
+                    object : RecyclerItemClickListenr.OnItemClickListener {
+                        override fun onItemClick(view: View, position: Int) {
+                            indexOfInterest = position
+                            getRamdonUserWithInterest()
+                        }
 
-                    override fun onItemLongClick(view: View?, position: Int) {
-                        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-                    }
+                        override fun onItemLongClick(view: View?, position: Int) {
+                            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                        }
 
-                }))
+                    })
+            )
         /*
         recyclerView.addOnItemTouchListener(RecyclerItemClickListenr(this, recyclerView, object : RecyclerItemClickListenr.OnItemClickListener {
 
@@ -76,18 +78,28 @@ class HomeViewModel:ViewModel() {
 
     fun getRamdonUserWithInterest(){
         userArrayFilterInterest = mutableListOf()
-        for(a in userArray){
-            for(b in a.interest){
-                if(b.equals(indexOfInterest)){
-                    userArrayFilterInterest.add(a)
-                }
+
+        userArray.forEach { user->
+            user.interest.forEach {
+                if(it.equals(indexOfInterest)) userArrayFilterInterest!!.add(user)
             }
         }
-        print(userArrayFilterInterest.toString())
+
+        if(userArrayFilterInterest!!.size.equals(0)){
+            Toast.makeText(currentFragment.context,"No se encontró resultados.",Toast.LENGTH_LONG).show()
+        } else {
+            setUserIntoCardProfile()
+        }
     }
 
     fun setUserIntoCardProfile(){
-        val us = userArray.random()
+        var us:UserDatabase=UserDatabase()
+        if(userArrayFilterInterest == null) {
+            us = userArray.random()
+        } else {
+            us = userArrayFilterInterest!!.random()
+        }
+        //val us = userArray.random()
         currentFragment.txtName.text = us.fullname
         currentFragment.txtAge.text = us.age
         currentFragment.txtCareer.text = us.career
