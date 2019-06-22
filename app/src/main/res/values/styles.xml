@@ -3,7 +3,7 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimaryDark">@color/colorRed</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
     <style name="AppTheme.CustomTheme">
@@ -21,7 +21,7 @@
     <style name="chatTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimaryDark">@color/colorRed</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowSoftInputMode">adjustPan|stateVisible</item>
     </style>
@@ -35,13 +35,13 @@
     <style name="activity_headers">
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">@dimen/large_font_size</item>
-        <item name="android:background">@color/colorPrimaryDark</item>
+        <item name="android:background">@color/colorRed</item>
         <item name="android:gravity">center</item>
         <item name="android:textStyle">bold</item>
     </style>
 
     <style name="dialog_header">
-        <item name="android:textColor">@color/colorPrimaryDark</item>
+        <item name="android:textColor">@color/colorRed</item>
         <item name="android:textSize">@dimen/large_font_size</item>
         <item name="android:background">@color/white</item>
         <item name="android:gravity">center</item>

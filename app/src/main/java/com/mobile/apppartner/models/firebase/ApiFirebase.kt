@@ -3,6 +3,7 @@ package com.mobile.apppartner.models.firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.mobile.apppartner.models.Interes
+import com.mobile.apppartner.models.Match
 import com.mobile.apppartner.models.UserDatabase
 import io.reactivex.Observable
 
@@ -12,6 +13,7 @@ class ApiFirebase {
     var userDatabase: UserDatabase? = null
     lateinit var uid:String
     var interesArray:MutableList<Interes> = mutableListOf()
+    var matchList:MutableList<Match? > = mutableListOf()
 
     constructor(){
         this.refFData = FirebaseDatabase.getInstance()
@@ -57,5 +59,27 @@ class ApiFirebase {
 
         }
         return observable
+    }
+
+    fun getDataReport():Observable<Match> {
+        val data: Observable<Match> = Observable.create { observer ->
+            uid = fireAuth.uid!!
+            refFData.getReference("match").addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    for (data in dataSnapshot.children) {
+                        val value: Match? = data.getValue(Match::class.java)
+                        if(value!!.to!!.equals(uid)){
+                            matchList.add(value)
+                        }
+                        observer.onNext(value!!)
+                        observer.onComplete()
+                    }
+                }
+                override fun onCancelled(p0: DatabaseError) {
+                    print(p0.message)
+                }
+            })
+        }
+        return data
     }
 }
