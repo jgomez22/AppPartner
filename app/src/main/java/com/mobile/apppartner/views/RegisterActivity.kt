@@ -40,20 +40,27 @@ class RegisterActivity : AppCompatActivity() {
         txtCorreoRe.setText(correo)
 
         this.btnRegistrar.setOnClickListener {
+            viewModel.visibleRegistro(this)
             val email = txtCorreoRe.text.toString()
             val password = txtPasswordRe.text.toString()
             getInterest()
-            if(viewModel.validateUser(password,this)){
-                viewModel.createAccount(email,password,this)
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe({
-                        viewModel.finishRegister(txtCorreoRe.text.toString(),txtNombreRe.text.toString(),campus,career)
-                        Toast.makeText(this, "Felicitaciones ${it.email}, ya te encuentras registrado", Toast.LENGTH_LONG).show()
-                        finish()
-                    },{error ->
-                        Toast.makeText(this,error.message, Toast.LENGTH_LONG).show()
-                    })
-            }
+            viewModel.validateUser(password,this)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+                    if(it.equals("")){
+                        viewModel.createAccount(email,password,this)
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe({
+                                viewModel.finishRegister(this,txtCorreoRe.text.toString(),txtNombreRe.text.toString(),campus,career)
+                            },{error ->
+                                viewModel.invisibleRegistro(this)
+                                Toast.makeText(this,error.message+"(Error 1)", Toast.LENGTH_LONG).show()
+                            })
+                    } else {
+                        viewModel.invisibleRegistro(this)
+                        Toast.makeText(this, it, Toast.LENGTH_LONG).show()
+                    }
+                }
         }
 
         this.imgPerfilRe.setOnClickListener {

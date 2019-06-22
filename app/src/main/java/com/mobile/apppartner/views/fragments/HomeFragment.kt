@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.google.firebase.database.*
 import com.mobile.apppartner.models.Interes
 import com.mobile.apppartner.R
@@ -33,14 +34,39 @@ class HomeFragment: Fragment() {
 
         viewModel = ViewModelProviders.of(this).get(HomeViewModel::class.java)
 
-        viewModel.getInteres().observeOn(AndroidSchedulers.mainThread()).subscribe({
+        viewModel.getInfoCurrentUser()
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                print(it)
+                viewModel.userDatabase = it
+                viewModel.getRamdonUser()
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({
+                        viewModel.userArray = it
+                        viewModel.setUserIntoCardProfile()
+                    },{
+                        Toast.makeText(this.context,it.message,Toast.LENGTH_LONG).show()
+                    })
+            },{
+                print(it.toString())
+            })//new commit
+
+        viewModel.getInteres()
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
                 viewModel.interesArray = it
-                getInteres()
+                viewModel.prueba(this)
+                //getInteres()
             },{
                 print(it.message)
             }
         ).isDisposed
 
+        btnNext.setOnClickListener {
+            if(viewModel.userArray.size!=0){
+                viewModel.setUserIntoCardProfile()
+            }
+        }
     }
 
     fun getInteres(){

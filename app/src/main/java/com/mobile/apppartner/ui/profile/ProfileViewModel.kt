@@ -8,7 +8,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.mobile.apppartner.models.Days
 import com.mobile.apppartner.models.UserDatabase
-import com.mobile.apppartner.models.firebase.ApiFirebase
+import com.mobile.apppartner.models.api.firebase.ApiFirebase
 import com.mobile.apppartner.views.LoginActivity
 import io.reactivex.Observable
 

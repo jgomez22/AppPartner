@@ -1,6 +1,7 @@
 package com.mobile.apppartner.models
 
 import android.app.Activity
+import android.net.Uri
 import android.view.View
 import com.google.firebase.auth.FirebaseAuth
 import com.microsoft.aad.adal.AuthenticationCallback
@@ -21,6 +22,36 @@ class ApiClient {
     }
     private lateinit var currentActivity:Activity
     private lateinit var auth: FirebaseAuth
+
+    fun validateUser(uri:Uri?,pass:String?,valueOfInterest:MutableList<Int>?):Observable<String>{
+        val observable:Observable<String> = Observable.create {observer->
+            if(uri==null){
+                observer.onNext("Sube una imagen de perfil.")
+                observer.onComplete()
+            } else {
+                if(pass=="" || pass==null) {
+                    observer.onNext("Contraseña vacio.")
+                    observer.onComplete()
+                } else {
+                    if(pass.length<7){
+                        observer.onNext("Contraseña debe tener mayor a 7 caracteres.")
+                        observer.onComplete()
+                    } else {
+                        if(valueOfInterest?.size==0 || valueOfInterest==null){
+                            observer.onNext("Selecione por lo menos un interés.")
+                            observer.onComplete()
+                        } else {
+                            observer.onNext("")
+                            observer.onComplete()
+                        }
+                    }
+                }
+
+            }
+
+        }
+        return observable
+    }
 
     fun createUser(email:String,password:String):Observable<UserPartner>{
         val observable:Observable<UserPartner> = Observable.create { observer ->
@@ -64,69 +95,5 @@ class ApiClient {
         return observable
     }
 
-    fun signInOffice365():Observable<UserVal>{
-        val observable:Observable<UserVal> = Observable.create { observer ->
-            showConnectingInProgressUI()
-            //check that client id and redirect have been set correctly
-
-                UUID.fromString(Constants.CLIENT_ID)
-                URI.create(Constants.REDIRECT_URI)
-
-            AuthenticationManager.getInstance().setContextActivity(this.currentActivity)
-            AuthenticationManager.getInstance().connect(
-                object : AuthenticationCallback<AuthenticationResult> {
-                    override fun onSuccess(result: AuthenticationResult) {
-
-                        //goToRegister(result.userInfo.displayableId.toString(),
-                          //  result.userInfo.givenName.toString()+" "+result.userInfo.familyName.toString(),
-                            //activity)
-                        observer.onNext(UserVal(result.userInfo.displayableId.toString(),result.userInfo.givenName.toString()+" "+result.userInfo.familyName.toString()))
-                        resetUIForConnect()
-                        //observer.onComplete()
-                    }
-
-                    override fun onError(e: Exception) {
-
-                        showConnectErrorUI()
-                    }
-                })
-
-        }
-
-        return observable
-    }
-
-    fun sendMessage(email:String,password:String):Observable<UserPartner>{
-        val observable:Observable<UserPartner> = Observable.create { observer ->
-            this.auth.signInWithEmailAndPassword(email,password).addOnCompleteListener(this.currentActivity){
-                if(it.isSuccessful){
-                    var email:String? = this.auth.currentUser?.email
-                    var isEmailVerified:Boolean? = this.auth.currentUser?.isEmailVerified
-                    if(email!=null && isEmailVerified!=null){
-                        val meUser = UserPartner(email,isEmailVerified)
-                        observer.onNext(meUser)
-                        observer.onComplete()
-                    }
-                } else {
-                    val error:Throwable = Throwable("el email y password son incorrectos",null)
-                    observer.onError(error)
-                }
-            }
-        }
-        return observable
-    }
-
-    private fun resetUIForConnect() {
-        this.currentActivity.pbCargar.setVisibility(View.GONE)
-    }
-
-    private fun showConnectingInProgressUI() {
-        this.currentActivity.pbCargar.setVisibility(View.VISIBLE)
-    }
-
-    private fun showConnectErrorUI() {
-        this.currentActivity.pbCargar.setVisibility(View.GONE)
-    }
 }
-
 public class UserVal(val email:String,val fullname:String)
