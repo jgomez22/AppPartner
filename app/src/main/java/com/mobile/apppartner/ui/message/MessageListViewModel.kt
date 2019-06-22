@@ -9,6 +9,7 @@ import com.mobile.apppartner.models.UserDatabase
 import io.reactivex.Observable
 
 import io.reactivex.disposables.Disposable
+import java.time.LocalDateTime
 import java.util.*
 
 class MessageListViewModel(private val uid: String) : ViewModel() {
@@ -37,10 +38,14 @@ class MessageListViewModel(private val uid: String) : ViewModel() {
                     var list: List<Message?> = ArrayList<Message>()
                     for (data in dataSnapshot.children) {
                         val value: Message? = data.getValue(Message::class.java)
-                        if (value!!.recipientId.equals(myUid) && value!!.senderId.equals(uid) ||
-                            value!!.recipientId.equals(uid) && value!!.senderId.equals(myUid)
+                        if (value!!.recipientId.equals(myUid) && value.senderId.equals(uid) ||
+                            value.recipientId.equals(uid) && value.senderId.equals(myUid)
                         ) {
-                            if(value.senderId.equals(myUid)){value.isMine=true}else{value.isMine=false}
+                            if (value.senderId.equals(myUid)) {
+                                value.isMine = true
+                            } else {
+                                value.isMine = false
+                            }
                             list += value
                         }
                     }
@@ -55,9 +60,9 @@ class MessageListViewModel(private val uid: String) : ViewModel() {
         subscription = user.subscribe();
     }
 
-    fun sendMessage(message : String) {
+    fun sendMessage(message: String) {
         val myUid = FirebaseAuth.getInstance().uid
         ref = FirebaseDatabase.getInstance().getReference("messages")
-        ref.push().setValue(Message(uid, myUid, Date(), message))
+        ref.push().setValue(Message(uid, myUid, LocalDateTime.now().toString(), message))
     }
 }

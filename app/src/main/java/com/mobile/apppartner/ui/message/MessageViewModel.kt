@@ -3,17 +3,16 @@ package com.mobile.apppartner.ui.message
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import com.mobile.apppartner.models.Message
-import java.util.*
 
 class MessageViewModel : ViewModel() {
 
     private val recipientId = MutableLiveData<String>()
     private val senderId = MutableLiveData<String>()
-    private val time = MutableLiveData<Date>()
+    private val time = MutableLiveData<String>()
     private val messageValue = MutableLiveData<String>()
     private val isMine = MutableLiveData<Boolean>()
 
-    fun bind(message: Message){
+    fun bind(message: Message) {
         recipientId.value = message.recipientId
         senderId.value = message.senderId
         time.value = message.time
@@ -29,7 +28,7 @@ class MessageViewModel : ViewModel() {
         return senderId
     }
 
-    fun getTimeId(): MutableLiveData<Date> {
+    fun getTimeId(): MutableLiveData<String> {
         return time
     }
 
