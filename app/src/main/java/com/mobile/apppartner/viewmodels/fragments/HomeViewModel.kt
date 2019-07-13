@@ -72,6 +72,10 @@ class HomeViewModel : ViewModel() {
             })
     }
 
+    var user:UserDatabase?=null
+
+    fun prueba(fragment:Fragment){
+        this.currentFragment=fragment
     fun prueba(fragment: Fragment) {
         this.currentFragment = fragment
         currentFragment.rvInteresesHO.setHasFixedSize(true)
@@ -164,7 +168,7 @@ class HomeViewModel : ViewModel() {
     fun getRamdonUserWithInterest() {
         userArrayFilterInterest = mutableListOf()
 
-        userArray.forEach { user ->
+        userArray.forEach { user->
             user.interest.forEach {
                 if (it.equals(indexOfInterest)) userArrayFilterInterest!!.add(user)
             }
@@ -184,14 +188,12 @@ class HomeViewModel : ViewModel() {
         } else {
             us = userArrayFilterInterest!!.random()
         }
+        user=us
         //val us = userArray.random()
         currentFragment.uid.text = us.uid.toString()
         currentFragment.txtName.text = us.fullname
-        currentFragment.txtAge.text = us.age
-        currentFragment.txtCareer.text = us.career
-        currentFragment.txtNumber.text = us.telephone
         currentFragment.txtDescr.text = us.descripcion
         Picasso.get().load(us.url_img).transform(CircleTransformation()).into(currentFragment.ivImageUser)
-        //Picasso.get().load(us?.url_img.toString()).transform(CircleTransformation()).into(this.imgPerfilPR)
+
     }
 }

@@ -11,11 +11,10 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name=".PruebaActivity">
+        <activity android:name=".views.PopDetailActivity"
+                  android:theme="@style/AppTheme.CustomTheme">
         </activity>
         <activity android:name=".ui.message.MessageListActivity">
-        </activity>
-        <activity android:name=".views.ChatActivity">
         </activity>
         <activity android:name=".views.SplashActivity">
             <intent-filter>
