@@ -40,7 +40,7 @@ class UserMatchListViewModel : ViewModel() {
                             if (value!!.accepted) {
                                 list += value!!.to
                             }
-                        }else if (value!!.to!!.id.equals(uid)) {
+                        } else if (value!!.to!!.id.equals(uid)) {
                             list += value!!.interested
                         }
                     }
