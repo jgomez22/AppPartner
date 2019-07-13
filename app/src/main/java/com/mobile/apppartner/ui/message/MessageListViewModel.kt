@@ -12,7 +12,7 @@ import io.reactivex.disposables.Disposable
 import java.time.LocalDateTime
 import java.util.*
 
-class MessageListViewModel(private val uid: String) : ViewModel() {
+class MessageListViewModel(private val uid: String, private val keyMatch: String?) : ViewModel() {
 
     lateinit var ref: DatabaseReference
     val messageListAdapter: MessageListAdapter = MessageListAdapter()
@@ -63,6 +63,10 @@ class MessageListViewModel(private val uid: String) : ViewModel() {
     fun sendMessage(message: String) {
         val myUid = FirebaseAuth.getInstance().uid
         ref = FirebaseDatabase.getInstance().getReference("messages")
+        if(keyMatch!=null && keyMatch!=""){
+            FirebaseDatabase.getInstance().getReference("match").child(keyMatch).child("accepted").setValue(true)
+            FirebaseDatabase.getInstance().getReference("match").child(keyMatch).child("interested").child("keyMatch").setValue("")
+        }
         ref.push().setValue(Message(uid, myUid, LocalDateTime.now().toString(), message))
     }
 }

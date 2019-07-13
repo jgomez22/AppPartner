@@ -20,10 +20,12 @@ class MessageListActivity : AppCompatActivity() {
         setContentView(R.layout.activity_message_list)
 
         val uid = intent.getStringExtra("uidDestination")
+        val keyMatch = intent.getStringExtra("keyMatch")
+
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_message_list)
         binding.messageList.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        viewModel = ViewModelProviders.of(this, ViewModelFactory(uid)).get(MessageListViewModel::class.java)
+        viewModel = ViewModelProviders.of(this, ViewModelFactory(uid, keyMatch)).get(MessageListViewModel::class.java)
         binding.viewModel = viewModel
 
         this.btnSend.setOnClickListener {

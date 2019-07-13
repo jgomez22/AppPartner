@@ -36,7 +36,13 @@ class UserMatchListViewModel : ViewModel() {
                     var list: List<UserMatch?> = ArrayList<UserMatch>()
                     for (data in dataSnapshot.children) {
                         val value: Match? = data.getValue(Match::class.java)
-                        list += value!!.interested
+                        if (value!!.interested!!.id.equals(uid)) {
+                            if (value!!.accepted) {
+                                list += value!!.to
+                            }
+                        }else if (value!!.to!!.id.equals(uid)) {
+                            list += value!!.interested
+                        }
                     }
                     userMatchListAdapter.updateUserMatch(list)
                 }

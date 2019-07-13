@@ -18,14 +18,14 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_home.*
 
-class HomeFragment: Fragment() {
+class HomeFragment : Fragment() {
 
     lateinit var viewModel: HomeViewModel
     lateinit var ref: DatabaseReference
-    var asd:MutableList<Interes> = mutableListOf()
+    var asd: MutableList<Interes> = mutableListOf()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        var view = inflater.inflate(R.layout.fragment_home,container,false)
+        var view = inflater.inflate(R.layout.fragment_home, container, false)
         return view
     }
 
@@ -44,10 +44,10 @@ class HomeFragment: Fragment() {
                     .subscribe({
                         viewModel.userArray = it
                         viewModel.setUserIntoCardProfile()
-                    },{
-                        Toast.makeText(this.context,it.message,Toast.LENGTH_LONG).show()
+                    }, {
+                        Toast.makeText(this.context, it.message, Toast.LENGTH_LONG).show()
                     })
-            },{
+            }, {
                 print(it.toString())
             })//new commit
 
@@ -57,19 +57,23 @@ class HomeFragment: Fragment() {
                 viewModel.interesArray = it
                 viewModel.prueba(this)
                 //getInteres()
-            },{
+            }, {
                 print(it.message)
             }
-        ).isDisposed
+            ).isDisposed
 
         btnNext.setOnClickListener {
-            if(viewModel.userArray.size!=0){
+            if (viewModel.userArray.size != 0) {
                 viewModel.setUserIntoCardProfile()
             }
         }
+
+        btnMatch.setOnClickListener {
+            viewModel.sendMatch(uid.text.toString())
+        }
     }
 
-    fun getInteres(){
+    fun getInteres() {
         this.rvInteresesHO.setHasFixedSize(true)
         val layout = LinearLayoutManager(this.context)
         layout.orientation = LinearLayoutManager.HORIZONTAL

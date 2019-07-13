@@ -30,11 +30,17 @@
                 android:background="@drawable/bg_bottom_grey"
                 android:gravity="center_vertical">
             <TextView
-                    android:id="@+id/uid"
+                    android:id="@+id/uidDestination"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:visibility="gone"
                     app:mutableText="@{viewModel.getId()}"/>
+            <TextView
+                    android:id="@+id/keyMatch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    app:mutableText="@{viewModel.getKeyMatch()}"/>
             <TextView
                     android:id="@+id/tv_user_name"
                     android:layout_width="wrap_content"

@@ -48,6 +48,11 @@ fun onUserMatchOnclick(relativeLayout: RelativeLayout, text: MutableLiveData<Str
                     ((relativeLayout.getChildAt(1) as ViewGroup).getChildAt(0) as TextView).text
                 )
                 relativeLayout.context.startActivity(intent)
+                intent.putExtra(
+                    "keyMatch",
+                    ((relativeLayout.getChildAt(1) as ViewGroup).getChildAt(1) as TextView).text
+                )
+                relativeLayout.context.startActivity(intent)
             }
         })
     }
