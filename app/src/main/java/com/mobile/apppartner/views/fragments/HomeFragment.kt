@@ -1,10 +1,10 @@
 package com.example.appprueba
 
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,9 +13,9 @@ import com.google.firebase.database.*
 import com.mobile.apppartner.models.Interes
 import com.mobile.apppartner.R
 import com.mobile.apppartner.viewmodels.fragments.HomeViewModel
+import com.mobile.apppartner.views.PopDetailActivity
 import com.mobile.apppartner.views.adapter.InteresAdapter
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_home.*
 
 class HomeFragment : Fragment() {
@@ -70,6 +70,29 @@ class HomeFragment : Fragment() {
 
         btnMatch.setOnClickListener {
             viewModel.sendMatch(uid.text.toString())
+        }
+
+        btnDetail.setOnClickListener{
+            val i = Intent(this.context,PopDetailActivity::class.java)
+            i.putExtra("nombre",viewModel.user!!.fullname)
+            i.putExtra("carrera",viewModel.user!!.career)
+            i.putExtra("edad",viewModel.user!!.age)
+            i.putExtra("campus",viewModel.user!!.campus)
+            i.putExtra("telefono",viewModel.user!!.telephone)
+            i.putExtra("descripcion",viewModel.user!!.descripcion)
+            this.startActivityForResult(i,200)
+            /*
+                var uid:String? = "",
+                var email:String= "",
+                var fullname:String= "",
+                var url_img:String= "",
+                var interest:MutableList<Int> = mutableListOf(),
+                var career:String= "",
+                var campus:String= "",
+                var telephone:String= "",
+                var age:String= "",
+                var descripcion:String=""
+             */
         }
     }
 

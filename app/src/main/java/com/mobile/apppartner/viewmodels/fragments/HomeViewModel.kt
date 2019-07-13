@@ -72,45 +72,10 @@ class HomeViewModel : ViewModel() {
             })
     }
 
-    fun prueba(fragment: Fragment) {
-        this.currentFragment = fragment
-        currentFragment.rvInteresesHO.setHasFixedSize(true)
-        val layout = LinearLayoutManager(currentFragment.context)
-        layout.orientation = LinearLayoutManager.HORIZONTAL
-        currentFragment.rvInteresesHO.setAdapter(InteresAdapter(interesArray))
-        currentFragment.rvInteresesHO.setLayoutManager(layout)
+    var user:UserDatabase?=null
 
-        currentFragment.rvInteresesHO
-            .addOnItemTouchListener(
-                RecyclerItemClickListenr(currentFragment.context!!,
-                    currentFragment.rvInteresesHO,
-                    object : RecyclerItemClickListenr.OnItemClickListener {
-                        override fun onItemClick(view: View, position: Int) {
-                            indexOfInterest = position
-                            getRamdonUserWithInterest()
-                        }
-
-                        override fun onItemLongClick(view: View?, position: Int) {
-                            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-                        }
-
-                    })
-            )
-        /*
-        recyclerView.addOnItemTouchListener(RecyclerItemClickListenr(this, recyclerView, object : RecyclerItemClickListenr.OnItemClickListener {
-
-        override fun onItemClick(view: View, position: Int) {
-            //do your work here..
-        }
-        override fun onItemLongClick(view: View?, position: Int) {
-            TODO("do nothing")
-        }
-    }))
-         */
-    }
-
-    fun match(fragment: Fragment) {
-        this.currentFragment = fragment
+    fun prueba(fragment:Fragment){
+        this.currentFragment=fragment
         currentFragment.rvInteresesHO.setHasFixedSize(true)
         val layout = LinearLayoutManager(currentFragment.context)
         layout.orientation = LinearLayoutManager.HORIZONTAL
@@ -184,14 +149,12 @@ class HomeViewModel : ViewModel() {
         } else {
             us = userArrayFilterInterest!!.random()
         }
+        user=us
         //val us = userArray.random()
         currentFragment.uid.text = us.uid.toString()
         currentFragment.txtName.text = us.fullname
-        currentFragment.txtAge.text = us.age
-        currentFragment.txtCareer.text = us.career
-        currentFragment.txtNumber.text = us.telephone
         currentFragment.txtDescr.text = us.descripcion
         Picasso.get().load(us.url_img).transform(CircleTransformation()).into(currentFragment.ivImageUser)
-        //Picasso.get().load(us?.url_img.toString()).transform(CircleTransformation()).into(this.imgPerfilPR)
+
     }
 }
