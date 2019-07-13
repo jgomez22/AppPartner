@@ -24,6 +24,8 @@ class HomeViewModel:ViewModel() {
     var userDatabase: UserDatabase?=null
     var indexOfInterest:Int?=null
 
+    var user:UserDatabase?=null
+
     fun prueba(fragment:Fragment){
         this.currentFragment=fragment
         currentFragment.rvInteresesHO.setHasFixedSize(true)
@@ -99,13 +101,11 @@ class HomeViewModel:ViewModel() {
         } else {
             us = userArrayFilterInterest!!.random()
         }
+        user=us
         //val us = userArray.random()
         currentFragment.txtName.text = us.fullname
-        currentFragment.txtAge.text = us.age
-        currentFragment.txtCareer.text = us.career
-        currentFragment.txtNumber.text = us.telephone
         currentFragment.txtDescr.text = us.descripcion
         Picasso.get().load(us.url_img).transform(CircleTransformation()).into(currentFragment.ivImageUser)
-        //Picasso.get().load(us?.url_img.toString()).transform(CircleTransformation()).into(this.imgPerfilPR)
+
     }
 }
