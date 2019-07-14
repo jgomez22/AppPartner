@@ -28,6 +28,7 @@ class HomeViewModel : ViewModel() {
     lateinit var ref: DatabaseReference
     var interested = UserMatch()
     var toUser = UserMatch()
+    var us = UserDatabase()
 
     fun sendMatch(id: String) {
         val myUid = FirebaseAuth.getInstance().uid
@@ -61,6 +62,21 @@ class HomeViewModel : ViewModel() {
                                 , false
                             )
                         )
+                        if (userArray.size != 0) {
+                            //borrar 1 principal
+                            userArray.removeAll {
+                                it.uid.toString().equals(uid)
+                            }
+
+                            //borrar 2 filtro
+                            if(!userArrayFilterInterest.isNullOrEmpty()){
+                                userArrayFilterInterest!!.removeAll {
+                                    it.uid.toString().equals(uid)
+                                }
+                            }
+
+                            setUserIntoCardProfile()
+                        }
                     }
 
                 }
@@ -143,7 +159,7 @@ class HomeViewModel : ViewModel() {
     }
 
     fun setUserIntoCardProfile() {
-        var us: UserDatabase = UserDatabase()
+        us= UserDatabase()
         if (userArrayFilterInterest == null) {
             us = userArray.random()
         } else {
@@ -155,6 +171,10 @@ class HomeViewModel : ViewModel() {
         currentFragment.txtName.text = us.fullname
         currentFragment.txtDescr.text = us.descripcion
         Picasso.get().load(us.url_img).transform(CircleTransformation()).into(currentFragment.ivImageUser)
+
+    }
+
+    fun deleteUID(uidString: String) {
 
     }
 }

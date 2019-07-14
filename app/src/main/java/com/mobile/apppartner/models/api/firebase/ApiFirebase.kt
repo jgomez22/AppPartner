@@ -5,8 +5,11 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.mobile.apppartner.models.*
 import io.reactivex.Observable
+import io.reactivex.Observable.create
 import java.time.LocalDate
 import java.time.LocalDateTime
+import java.util.*
+import kotlin.collections.ArrayList
 
 class ApiFirebase {
     var fireAuth: FirebaseAuth
@@ -15,7 +18,8 @@ class ApiFirebase {
     lateinit var uid:String
     var interesArray:MutableList<Interes> = mutableListOf()
     var days: Days = Days()
-
+    var arrayUID:MutableList<String> = mutableListOf()
+    var st:String =""
 
     constructor(){
         this.refFData = FirebaseDatabase.getInstance()
@@ -23,7 +27,7 @@ class ApiFirebase {
     }
 
     fun createUser(email:String,password:String,activity: Activity):Observable<UserPartner>{
-        val observable:Observable<UserPartner> = Observable.create { observer ->
+        val observable:Observable<UserPartner> = create { observer ->
             fireAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(activity){
                     task->
                 if(task.isSuccessful){
@@ -44,7 +48,7 @@ class ApiFirebase {
     }
 
     fun getRamdonUserWithInterest(campus:String):Observable<MutableList<UserDatabase>>{
-        val userObservable:Observable<MutableList<UserDatabase>> = Observable.create{observer->
+        val userObservable:Observable<MutableList<UserDatabase>> = create{observer->
 
         }
         return userObservable
@@ -53,7 +57,28 @@ class ApiFirebase {
     fun getRamdonUser(campus:String):Observable<MutableList<UserDatabase>>{
         var arrayUser:MutableList<UserDatabase> = mutableListOf()
 
-        val userObservable:Observable<MutableList<UserDatabase>> = Observable.create{observer->
+        //
+        uid = fireAuth.uid!!
+        arrayUID = mutableListOf()
+        val match = refFData.getReference("match/")
+        val q = match.orderByChild("interested/id").equalTo(uid).
+            addListenerForSingleValueEvent(object :ValueEventListener{
+                override fun onCancelled(p0: DatabaseError) {
+                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                }
+
+                override fun onDataChange(p0: DataSnapshot) {
+                    for(us in p0.children){
+                        var a:Match = us.getValue(Match::class.java)!!
+                        arrayUID.add(a.to?.id.toString())
+                    }
+                    st = ArrayToString(arrayUID)
+                    print("")
+                }
+
+            })
+        //
+        val userObservable:Observable<MutableList<UserDatabase>> = create{observer->
             uid = fireAuth.uid!!
 
             val a = refFData.getReference("users/")
@@ -67,8 +92,13 @@ class ApiFirebase {
                     if(p0.exists() && p0.childrenCount.toInt()!=1){
                         for(us in p0.children){
                             u = us.getValue(UserDatabase::class.java)!!
-                            if(!u.uid.equals(fireAuth.uid.toString()))arrayUser.add(u)
+                            if(!u.uid.equals(fireAuth.uid.toString())){
+                                if(!st.contains(u.uid.toString()))arrayUser.add(u)
+
+                            }
                         }
+                        print("")
+
                         observer.onNext(arrayUser)
                     } else {
                         val error = Throwable("No se encontraron resultados")
@@ -80,8 +110,16 @@ class ApiFirebase {
         return userObservable
     }
 
+    fun ArrayToString(array:MutableList<String>):String{
+        var a = ""
+        for (asd in array){
+            a = a+","+asd
+        }
+        return a
+    }
+
     fun getInfoCurrentUser():Observable<UserDatabase>{
-        val userObservable:Observable<UserDatabase> = Observable.create{observer->
+        val userObservable:Observable<UserDatabase> = create{observer->
             uid = fireAuth.uid!!
             refFData.getReference("users").child(uid!!).addListenerForSingleValueEvent(object :ValueEventListener{
                 override fun onDataChange(p0: DataSnapshot) {
@@ -98,7 +136,7 @@ class ApiFirebase {
     }
 
     fun getInteres(): Observable<MutableList<Interes>> {
-        val observable:Observable<MutableList<Interes>> = Observable.create {observer->
+        val observable:Observable<MutableList<Interes>> = create {observer->
             refFData.getReference("interes").addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(p0: DataSnapshot) {
                     if(p0.exists()){
@@ -122,7 +160,7 @@ class ApiFirebase {
     }
 
     fun getDataReport(): Observable<Days> {
-        val data: Observable<Days> = Observable.create { observer ->
+        val data: Observable<Days> = create { observer ->
             uid = fireAuth.uid!!
             refFData.getReference("match").addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {

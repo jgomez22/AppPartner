@@ -70,6 +70,7 @@ class HomeFragment : Fragment() {
 
         btnMatch.setOnClickListener {
             viewModel.sendMatch(uid.text.toString())
+            Toast.makeText(this.context,"Se envio su solicitud",Toast.LENGTH_LONG).show()
         }
 
         btnDetail.setOnClickListener{
